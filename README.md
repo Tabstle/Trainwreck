@@ -1,2 +1,4 @@
 # Trainwreck
-StuG1
+StuG1 Spiel 
+
+Lea Martinik, Hannes Salzmann, Tabea Stritzke
