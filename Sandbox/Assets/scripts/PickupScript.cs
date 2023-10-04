@@ -5,17 +5,22 @@ using UnityEngine;
 public class PickupScript : MonoBehaviour, IInteractable
 {
     private bool pickedUp = false;
-    private bool moveToClip = false;
+    private bool moveToClipNode = false;
+    private bool showClip = false;
     private GameObject clipToObject;
-    private GameObject ClipObject;
+    private GameObject clipNode;
     private Rigidbody Rigidbody;
+    private Outline outline;
     public void Interact()
     {
 
         if (pickedUp){
 
             pickedUp = false;
-            Clip("clipPoint");
+            if (showClip)
+            {
+                moveToClipNode = true;
+            }
 
 
             Rigidbody.velocity = Vector3.zero;
@@ -32,6 +37,26 @@ public class PickupScript : MonoBehaviour, IInteractable
         }
         
     }
+    public void hoverIO(GameObject clipNode)
+    {
+        if (pickedUp)
+        {
+            this.clipNode = clipNode;
+            showClip = !showClip;
+            //This will show that your able to Clip the object;
+            if (showClip)
+            {
+                Debug.Log("Show clip");
+                outline.OutlineColor = Color.red;
+            }
+            else
+            {
+                Debug.Log("Hide clip");
+                outline.OutlineColor = Color.white;
+            }
+            
+        }
+    }
    
 
     // Start is called before the first frame update
@@ -39,6 +64,7 @@ public class PickupScript : MonoBehaviour, IInteractable
     {
         clipToObject = GameObject.Find("PickUpPoint");
         Rigidbody = GetComponent<Rigidbody>();
+        outline = GetComponent<Outline>();
     }
 
     // Update is called once per frame
@@ -48,45 +74,18 @@ public class PickupScript : MonoBehaviour, IInteractable
         {
             Rigidbody.velocity = (clipToObject.transform.position - transform.position) * 10;
         }
-        else if (moveToClip)
+        else if (moveToClipNode)
         {
-            Rigidbody.velocity = (ClipObject.transform.position - transform.position) * 10;
+            Rigidbody.velocity = (clipNode.transform.position - transform.position) * 10;
 
-            if (Vector3.Distance(transform.position, ClipObject.transform.position) <= 0.2f)
+            if (Vector3.Distance(transform.position, clipNode.transform.position) <= 0.2f)
             {
-                transform.transform.position = ClipObject.transform.position;
+                transform.transform.position = clipNode.transform.position;
                 Debug.Log("Object clipped");
-                moveToClip = false;
-                ClipObject = null;
+                moveToClipNode = false;
+                clipNode = null;
             }
         }
         
-    }
-    public void Clip(string Tag)
-    {
-        GameObject[] targetObjects = GameObject.FindGameObjectsWithTag(Tag);
-        
-        GameObject closestObject = null;
-        float closestDistance = Mathf.Infinity;
-        foreach (GameObject targetObject in targetObjects)
-        {
-            // Calculate the distance between this object and the target object
-            float distance = Vector3.Distance(transform.position, targetObject.transform.position);
-
-            // Check if the target object is within the detection range
-            if (distance <= 1f)
-            {
-                closestDistance = distance;
-                closestObject = targetObject;
-                Debug.Log("Object with tag '" + Tag + "' is within range!");
-                  
-            }
-        }
-        if (closestObject != null)
-        {
-            ClipObject = closestObject;
-            moveToClip = true;
-        }
-
     }
 }

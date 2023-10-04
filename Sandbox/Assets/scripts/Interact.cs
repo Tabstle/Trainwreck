@@ -5,6 +5,7 @@ using UnityEngine;
 interface IInteractable
 {
     public void Interact();
+   // public void Interact(GameObject gameObject);
 }
 
 public class Interact : MonoBehaviour
@@ -57,5 +58,9 @@ public class Interact : MonoBehaviour
             interactObj = null;
         }
     }
+    //public void hoverNode(GameObject clipNode)
+    //{
+    //    interactObj.Interact(clipNode);
+    //}
 
 }
