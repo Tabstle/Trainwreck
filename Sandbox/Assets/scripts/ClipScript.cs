@@ -22,8 +22,7 @@ public class ClipScript : MonoBehaviour
         {
             Debug.Log("Cube exited clipNode");
             // other.gameObject.GetComponent<Interact>().hoverNode(gameObject);
-            other.gameObject.GetComponent<PickupScript>().hoverIO(gameObject);
-
+            other.gameObject.GetComponent<PickupScript>().exitClipNode();
         }
     }
 }

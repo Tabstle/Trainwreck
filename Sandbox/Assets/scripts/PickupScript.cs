@@ -6,20 +6,26 @@ public class PickupScript : MonoBehaviour, IInteractable
 {
     private bool pickedUp = false;
     private bool moveToClipNode = false;
-    private bool showClip = false;
+    private bool enteredClipNode = false;
+    private bool clipped = false;
     private GameObject clipToObject;
     private GameObject clipNode;
     private Rigidbody Rigidbody;
     private Outline outline;
+    private GameObject dublicate;
+    private Vector3 objectHeight;
     public void Interact()
     {
+        pickedUp = !pickedUp;
+        // Relese Freezed Position;
+        Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        if (!pickedUp){
 
-        if (pickedUp){
-
-            pickedUp = false;
-            if (showClip)
+            if (enteredClipNode)
             {
                 moveToClipNode = true;
+
+                dublicate.GetComponent<MeshRenderer>().enabled = false;
             }
 
 
@@ -31,9 +37,13 @@ public class PickupScript : MonoBehaviour, IInteractable
         }
         else
         {
+            if (enteredClipNode)
+            {
+                dublicate.GetComponent<MeshRenderer>().enabled = true;
+            }
+
             Rigidbody.useGravity = false;
             Debug.Log("Picked up");
-            pickedUp = true;
         }
         
     }
@@ -41,23 +51,41 @@ public class PickupScript : MonoBehaviour, IInteractable
     {
         if (pickedUp)
         {
+
             this.clipNode = clipNode;
-            showClip = !showClip;
             //This will show that your able to Clip the object;
-            if (showClip)
+            enteredClipNode = true;
+           
+            MeshFilter meshFilter = GetComponent<MeshFilter>();
+            if (meshFilter != null)
             {
-                Debug.Log("Show clip");
-                outline.OutlineColor = Color.red;
+                Debug.Log("Init clip");
+                dublicate = new GameObject("Silhouette of: " + gameObject.name);
+                dublicate.transform.localScale = transform.localScale;
+                dublicate.transform.position = clipNode.transform.position + objectHeight;
+                MeshFilter newMeshFilter = dublicate.AddComponent<MeshFilter>();
+                newMeshFilter.sharedMesh = meshFilter.sharedMesh;
+                MeshRenderer newMeshRenderer = dublicate.AddComponent<MeshRenderer>();
+
+                Outline outline = dublicate.AddComponent<Outline>();
+                outline.OutlineColor = new Color(0, 0, 0, 0.5f);
+                outline.OutlineMode = Outline.Mode.OutlineAll;
+                outline.OutlineWidth = 10;
             }
-            else
-            {
-                Debug.Log("Hide clip");
-                outline.OutlineColor = Color.white;
-            }
+  
+            
+                
             
         }
     }
-   
+    public void exitClipNode()
+    {
+        enteredClipNode = false;
+        Debug.Log("_________________ClipNode NULL_____________________________");
+        clipNode = null;
+        Destroy(dublicate);
+
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +93,7 @@ public class PickupScript : MonoBehaviour, IInteractable
         clipToObject = GameObject.Find("PickUpPoint");
         Rigidbody = GetComponent<Rigidbody>();
         outline = GetComponent<Outline>();
+        objectHeight = new Vector3(0, transform.lossyScale.y * 0.5f, 0);
     }
 
     // Update is called once per frame
@@ -72,18 +101,23 @@ public class PickupScript : MonoBehaviour, IInteractable
     {
         if (pickedUp)
         {
+            //Move to playerClip
             Rigidbody.velocity = (clipToObject.transform.position - transform.position) * 10;
         }
-        else if (moveToClipNode)
+        else if(moveToClipNode)
         {
-            Rigidbody.velocity = (clipNode.transform.position - transform.position) * 10;
-
-            if (Vector3.Distance(transform.position, clipNode.transform.position) <= 0.2f)
+            //Move to clipNode
+            Vector3 clipPosition = clipNode.transform.position + objectHeight;
+            Rigidbody.velocity = (clipPosition - transform.position) * 10;
+            Rigidbody.useGravity = false;
+            if (Vector3.Distance(transform.position, clipPosition) <= 0.1f)
             {
-                transform.transform.position = clipNode.transform.position;
+                //Rigidbody.velocity = Vector3.zero;
+                Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+                transform.transform.position = clipPosition;
                 Debug.Log("Object clipped");
+                clipped = true;
                 moveToClipNode = false;
-                clipNode = null;
             }
         }
         
