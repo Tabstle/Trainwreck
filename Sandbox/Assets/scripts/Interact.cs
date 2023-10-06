@@ -5,8 +5,10 @@ using UnityEngine;
 interface IInteractable
 {
     public void Interact();
-   // public void Interact(GameObject gameObject);
+    // public void Interact(GameObject gameObject);
+    public void Inspect();
 }
+
 
 public class Interact : MonoBehaviour
 {
@@ -31,6 +33,7 @@ public class Interact : MonoBehaviour
                 interactObj.Interact();
                 pickedUp = !pickedUp;
                 interactObj = null;
+                return;
             }
             Ray CameraRay = PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(CameraRay, out RaycastHit HitInfo, InteractionDistance, PickupMask))
@@ -42,6 +45,13 @@ public class Interact : MonoBehaviour
                     pickedUp = !pickedUp;
                     interactObj.Interact();
                 }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (pickedUp)
+            {
+                interactObj.Inspect();
             }
         }
     }
@@ -58,9 +68,5 @@ public class Interact : MonoBehaviour
             interactObj = null;
         }
     }
-    //public void hoverNode(GameObject clipNode)
-    //{
-    //    interactObj.Interact(clipNode);
-    //}
 
 }

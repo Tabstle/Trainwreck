@@ -7,7 +7,6 @@ public class PickupScript : MonoBehaviour, IInteractable
     private bool pickedUp = false;
     private bool moveToClipNode = false;
     private bool enteredClipNode = false;
-    private bool clipped = false;
     private GameObject clipToObject;
     private GameObject clipNode;
     private Rigidbody Rigidbody;
@@ -49,39 +48,61 @@ public class PickupScript : MonoBehaviour, IInteractable
     }
     public void hoverIO(GameObject clipNode)
     {
-        if (pickedUp)
+
+        this.clipNode = clipNode;
+        //This will show that your able to Clip the object;
+        enteredClipNode = true;
+
+
+        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+        if (meshFilter != null && meshRenderer != null)
         {
+            //Debug.Log("Init clip");
+            dublicate = new GameObject("Silhouette of: " + gameObject.name);
+            // Setts Scale and Postion of the dublicate
+            dublicate.transform.localScale = transform.localScale;
+            dublicate.transform.position = clipNode.transform.position + objectHeight;
 
-            this.clipNode = clipNode;
-            //This will show that your able to Clip the object;
-            enteredClipNode = true;
+
+            MeshFilter newMeshFilter = dublicate.AddComponent<MeshFilter>();
+            newMeshFilter.sharedMesh = meshFilter.sharedMesh;
+            MeshRenderer newMeshRenderer = dublicate.AddComponent<MeshRenderer>();
+
+            
+
+            Outline outline = dublicate.AddComponent<Outline>();
+            outline.OutlineColor = new Color(0, 0, 0, 0.5f);
+            outline.OutlineMode = Outline.Mode.OutlineAll;
+            outline.OutlineWidth = 10;
+
            
-            MeshFilter meshFilter = GetComponent<MeshFilter>();
-            if (meshFilter != null)
-            {
-                Debug.Log("Init clip");
-                dublicate = new GameObject("Silhouette of: " + gameObject.name);
-                dublicate.transform.localScale = transform.localScale;
-                dublicate.transform.position = clipNode.transform.position + objectHeight;
-                MeshFilter newMeshFilter = dublicate.AddComponent<MeshFilter>();
-                newMeshFilter.sharedMesh = meshFilter.sharedMesh;
-                MeshRenderer newMeshRenderer = dublicate.AddComponent<MeshRenderer>();
+            //remove first material (the one with the pink color) it does not work!!!!
 
-                Outline outline = dublicate.AddComponent<Outline>();
-                outline.OutlineColor = new Color(0, 0, 0, 0.5f);
-                outline.OutlineMode = Outline.Mode.OutlineAll;
-                outline.OutlineWidth = 10;
-            }
-  
-            
-                
-            
+
+            //Material[] materials = dublicate.GetComponent<Renderer>().materials;
+            //if (newMeshRenderer && newMeshFilter && materials != null)
+            //{
+            //    Material[] buffer = new Material[2];
+            //    for (int i = 0; i < buffer.Length; i++)
+            //    {
+
+            //        buffer[i] = materials[i + 1];
+            //    }
+            //    newMeshRenderer.sharedMaterials = buffer;
+            //}
+        }
+
+        if (!pickedUp)
+        {
+            dublicate.GetComponent<MeshRenderer>().enabled = false;
+
         }
     }
     public void exitClipNode()
     {
         enteredClipNode = false;
-        Debug.Log("_________________ClipNode NULL_____________________________");
+        moveToClipNode = false;
         clipNode = null;
         Destroy(dublicate);
 
@@ -116,7 +137,6 @@ public class PickupScript : MonoBehaviour, IInteractable
                 Rigidbody.constraints = RigidbodyConstraints.FreezeAll;
                 transform.transform.position = clipPosition;
                 Debug.Log("Object clipped");
-                clipped = true;
                 moveToClipNode = false;
             }
         }
