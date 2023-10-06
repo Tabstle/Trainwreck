@@ -6,7 +6,6 @@ interface IInteractable
 {
     public void Interact();
     // public void Interact(GameObject gameObject);
-    public void Inspect();
 }
 
 
@@ -51,7 +50,7 @@ public class Interact : MonoBehaviour
         {
             if (pickedUp)
             {
-                interactObj.Inspect();
+                //interactObj.Inspect();
             }
         }
     }
