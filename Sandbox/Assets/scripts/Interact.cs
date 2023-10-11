@@ -28,21 +28,30 @@ public class Interact : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (pickedUp) {
+
+            if (pickedUp)
+            {
                 interactObj.Interact();
                 pickedUp = !pickedUp;
                 interactObj = null;
                 return;
             }
-            Ray CameraRay = PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            if (Physics.Raycast(CameraRay, out RaycastHit HitInfo, InteractionDistance, PickupMask))
+            Ray camRay = PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            if (Physics.Raycast(camRay, out RaycastHit HitInfo, InteractionDistance, PickupMask))
             {
-                //Debug.Log("Hit " + HitInfo.collider.gameObject.name);
-                if (HitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                if(HitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
-                    this.interactObj = interactObj;
-                    pickedUp = !pickedUp;
-                    interactObj.Interact();
+                    if (HitInfo.collider.gameObject.CompareTag("door"))
+                    {
+                        interactObj.Interact();
+                    }
+                    else if (HitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Pickup"))
+                    {
+                        this.interactObj = interactObj;
+                        pickedUp = !pickedUp;
+                        interactObj.Interact();
+                    }
+                    
                 }
             }
         }

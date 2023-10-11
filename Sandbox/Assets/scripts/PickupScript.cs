@@ -18,7 +18,8 @@ public class PickupScript : MonoBehaviour, IInteractable
         pickedUp = !pickedUp;
         // Relese Freezed Position;
         Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        if (!pickedUp){
+        if (!pickedUp)
+        {
 
             if (enteredClipNode)
             {
@@ -31,7 +32,7 @@ public class PickupScript : MonoBehaviour, IInteractable
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.useGravity = true;
             Debug.Log("Put down");
-            
+
 
         }
         else
@@ -44,9 +45,9 @@ public class PickupScript : MonoBehaviour, IInteractable
             Rigidbody.useGravity = false;
             Debug.Log("Picked up");
         }
-        
+
     }
-    public void hoverIO(GameObject clipNode)
+    public void enterNode(GameObject clipNode)
     {
 
         this.clipNode = clipNode;
@@ -69,28 +70,31 @@ public class PickupScript : MonoBehaviour, IInteractable
             newMeshFilter.sharedMesh = meshFilter.sharedMesh;
             MeshRenderer newMeshRenderer = dublicate.AddComponent<MeshRenderer>();
 
-            
+
 
             Outline outline = dublicate.AddComponent<Outline>();
             outline.OutlineColor = new Color(0, 0, 0, 0.5f);
             outline.OutlineMode = Outline.Mode.OutlineAll;
             outline.OutlineWidth = 10;
 
-           
+            
+
             //remove first material (the one with the pink color) it does not work!!!!
+            Material[] materials = dublicate.GetComponent<Renderer>().materials;
+            if (newMeshRenderer && newMeshFilter && materials != null)
+            {
+                Material[] buffer = new Material[2];
+                for (int i = 0; i < buffer.Length; i++)
+                {
 
+                    buffer[i] = materials[i + 1];
+                }
+                newMeshRenderer.sharedMaterials = buffer;
+            }
 
-            //Material[] materials = dublicate.GetComponent<Renderer>().materials;
-            //if (newMeshRenderer && newMeshFilter && materials != null)
-            //{
-            //    Material[] buffer = new Material[2];
-            //    for (int i = 0; i < buffer.Length; i++)
-            //    {
-
-            //        buffer[i] = materials[i + 1];
-            //    }
-            //    newMeshRenderer.sharedMaterials = buffer;
-            //}
+            //Workaround to update meshRenderer
+            dublicate.GetComponent<Outline>().enabled = false;
+            dublicate.GetComponent<Outline>().enabled = true;
         }
 
         if (!pickedUp)
@@ -125,7 +129,7 @@ public class PickupScript : MonoBehaviour, IInteractable
             //Move to playerClip
             Rigidbody.velocity = (clipToObject.transform.position - transform.position) * 10;
         }
-        else if(moveToClipNode)
+        else if (moveToClipNode)
         {
             //Move to clipNode
             Vector3 clipPosition = clipNode.transform.position + objectHeight;
@@ -140,6 +144,6 @@ public class PickupScript : MonoBehaviour, IInteractable
                 moveToClipNode = false;
             }
         }
-        
+
     }
 }

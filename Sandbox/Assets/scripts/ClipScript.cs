@@ -11,7 +11,7 @@ public class ClipScript : MonoBehaviour
         {
             Debug.Log("Cube entered clipNode");
             // other.gameObject.GetComponent<Interact>().hoverNode(gameObject);
-            colliding.gameObject.GetComponent<PickupScript>().hoverIO(gameObject);
+            colliding.gameObject.GetComponent<PickupScript>().enterNode(gameObject);
 
         }
        
