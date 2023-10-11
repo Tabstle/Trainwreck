@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerTeleport : MonoBehaviour
 {
     public GameObject Train1;
     public GameObject Train2;
+
+    private GameObject pickedItem;
+    private IInteractable interactableObj;
 
 
     PlayerController controller;
@@ -30,10 +34,7 @@ public class PlayerTeleport : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T) && controller.disabled == false)
         {
-            if (interact.IsPickedUp())
-            {
-                interact.letgo();
-            }
+            
 
             
             float playerHeight = gameObject.GetComponent<CharacterController>().height;
@@ -56,12 +57,17 @@ public class PlayerTeleport : MonoBehaviour
     }
     IEnumerator Teleport(Vector3 destination)
     {
-
+        
         controller.disabled = true;
         yield return new WaitForSeconds(.1f);
         gameObject.transform.position = destination;
+        if (interact.IsPickedUp())
+        {
+            interact.getObject().transform.position = GameObject.Find("PickUpPoint").transform.position;
+        }
         yield return new WaitForSeconds(.1f);
         controller.disabled = false;
         
+
     }
 }

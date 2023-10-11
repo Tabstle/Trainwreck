@@ -6,6 +6,7 @@ TagManager:
   tags:
   - clipPoint
   - movable
+  - doorBtn
   layers:
   - Default
   - TransparentFX
@@ -13,10 +14,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Deathzone
-  - Ground
-  - Pickup
   - 
+  - Ground
+  - Interactable
+  - Player
   - Clipping
   - 
   - movingNoColl

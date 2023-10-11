@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IInteractable
+public interface IInteractable
 {
     public void Interact();
     // public void Interact(GameObject gameObject);
@@ -16,6 +16,7 @@ public class Interact : MonoBehaviour
     [SerializeField] float InteractionDistance = 2f;
     private bool pickedUp = false;
     private IInteractable interactObj;
+    private GameObject hitObject;
 
     // Start is called before the first frame update
     void Start()
@@ -34,19 +35,25 @@ public class Interact : MonoBehaviour
                 interactObj.Interact();
                 pickedUp = !pickedUp;
                 interactObj = null;
+                hitObject = null;
                 return;
             }
             Ray camRay = PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             if (Physics.Raycast(camRay, out RaycastHit HitInfo, InteractionDistance, PickupMask))
             {
+                Debug.Log("Hit");
                 if(HitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
-                    if (HitInfo.collider.gameObject.CompareTag("door"))
+                    Debug.Log("Hit Interactable");
+                    if (HitInfo.collider.gameObject.CompareTag("doorBtn"))
                     {
+                        Debug.Log("Hit doorBtn");
+
                         interactObj.Interact();
                     }
-                    else if (HitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Pickup"))
+                    else if (HitInfo.collider.gameObject.CompareTag("movable"))
                     {
+                        hitObject = HitInfo.collider.gameObject;
                         this.interactObj = interactObj;
                         pickedUp = !pickedUp;
                         interactObj.Interact();
@@ -76,5 +83,12 @@ public class Interact : MonoBehaviour
             interactObj = null;
         }
     }
-
+    public GameObject getObject()
+    {
+        if(interactObj != null)
+        {
+            return hitObject;
+        }
+        return null;
+    }
 }

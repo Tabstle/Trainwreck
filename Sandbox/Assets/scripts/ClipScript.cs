@@ -7,7 +7,7 @@ public class ClipScript : MonoBehaviour
     private void OnTriggerEnter(Collider colliding)
     {
 
-        if (colliding.gameObject.layer == LayerMask.NameToLayer("Pickup")) 
+        if (colliding.gameObject.CompareTag("movable")) 
         {
             Debug.Log("Cube entered clipNode");
             // other.gameObject.GetComponent<Interact>().hoverNode(gameObject);
@@ -18,7 +18,7 @@ public class ClipScript : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Pickup"))
+        if (other.gameObject.CompareTag("movable"))
         {
             Debug.Log("Cube exited clipNode");
             // other.gameObject.GetComponent<Interact>().hoverNode(gameObject);
