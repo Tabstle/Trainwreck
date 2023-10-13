@@ -40,19 +40,17 @@ public class lightScript : MonoBehaviour, IInteractable
         if (blocked)
         {
             Vector3 target = movingTowardsTarget ? (targetpos + startpos) : startpos;
-            Debug.Log("target: " + (movingTowardsTarget  ? "target" : "Start"));
-            Debug.Log("Distance: "+Vector3.Distance(transform.position, target));
             transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
             if (Vector3.Distance(transform.position, target) < 0.01f)
             {
                 movingTowardsTarget = !movingTowardsTarget;
                 returning = true;
-                Debug.Log("returning");
             }
             if (Vector3.Distance(transform.position, startpos) < 0.01f)
             {
                 if (returning)
                 {
+                    transform.position = startpos;
                     blocked = false;
                     returning = false;
                 }

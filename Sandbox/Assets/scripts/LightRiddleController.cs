@@ -25,7 +25,6 @@ public class LightRiddleController : MonoBehaviour
     
     public void pressedButton(GameObject o)
     {
-
         if (o.Equals(button1) && !disableBtn1)
         {
             light1.SetActive(!light1.activeSelf);
@@ -40,7 +39,7 @@ public class LightRiddleController : MonoBehaviour
         else if (o.Equals(button3) && !disableBtn3)
         {
             light2.SetActive(!light2.activeSelf);
-            light3.SetActive(!light3.activeSelf);
+            light4.SetActive(!light4.activeSelf);
         }
     }
 
