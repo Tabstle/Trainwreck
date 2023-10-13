@@ -11,7 +11,7 @@ public interface IInteractable
 
 public class Interact : MonoBehaviour
 {
-    [SerializeField] private LayerMask PickupMask;
+    [SerializeField] private LayerMask InteractMask;
     [SerializeField] private Camera PlayerCamera;
     [SerializeField] float InteractionDistance = 2f;
     private bool pickedUp = false;
@@ -27,7 +27,7 @@ public class Interact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
         {
 
             if (pickedUp)
@@ -39,12 +39,11 @@ public class Interact : MonoBehaviour
                 return;
             }
             Ray camRay = PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            if (Physics.Raycast(camRay, out RaycastHit HitInfo, InteractionDistance, PickupMask))
+            Debug.DrawRay(camRay.origin, camRay.direction * InteractionDistance, Color.red, 1f);
+            if (Physics.Raycast(camRay, out RaycastHit HitInfo, InteractionDistance, InteractMask))
             {
-                Debug.Log("Hit");
                 if(HitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
-                    Debug.Log("Hit Interactable");
                     if (HitInfo.collider.gameObject.CompareTag("doorBtn"))
                     {
                         Debug.Log("Hit doorBtn");
@@ -56,6 +55,10 @@ public class Interact : MonoBehaviour
                         hitObject = HitInfo.collider.gameObject;
                         this.interactObj = interactObj;
                         pickedUp = !pickedUp;
+                        interactObj.Interact();
+                    }
+                    else if (HitInfo.collider.gameObject.CompareTag("lightBtn"))
+                    {
                         interactObj.Interact();
                     }
                     
