@@ -13,6 +13,40 @@ public class PickupScript : MonoBehaviour, IInteractable
     private Outline outline;
     private GameObject dublicate;
     private Vector3 objectHeight;
+
+    public enum Tag
+    {
+        BottleSmall,
+        BottleMedium,
+        BottleLarge,
+        GlassSmall,
+        GlassMedium,
+        GlassLarge,
+        KnifeSmall,
+        KnifeLarge,
+        Chair,
+        ArmChair,
+        Picture1,
+        Picture2,
+        Vase,
+        CandleholderSmall,
+        CandleholderMedium,
+        CandleholderLarge,
+        Cutlery,
+        Pan
+    }
+
+    [SerializeField] private Tag objectTag;
+
+    public Tag ObjectTag
+    {
+        get { return objectTag; }
+        set
+        {
+            objectTag = value;
+        }
+    }
+
     public void Interact()
     {
         pickedUp = !pickedUp;

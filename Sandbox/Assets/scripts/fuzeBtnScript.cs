@@ -80,6 +80,7 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
 
     private bool checkFuse()
     {
+        bool fuseCorrect = false;
         //Check for LightRiddle
         if (lightRiddleControllerObjDim1 != null && lightRiddleControllerObjDim2 != null)
         {
@@ -99,12 +100,29 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
                     }
                 }
             }
+            
         }
 
+        if (checkGravNodes())
+        {
+            fuseCorrect = true;
+            Debug.Log("GraveNodes are correct");
+        }
+        else
+        {
+            fuseCorrect = false;
+            Debug.Log("GraveNodes are not correct");
+        }
+
+        return fuseCorrect;
+    }
+
+    private bool checkGravNodes()
+    {
         //Check  GravNodes
         int length = wagenDim1.transform.GetChild(0).transform.childCount;
         int movables = (wagenDim1.transform.GetChild(4).transform.childCount + wagenDim2.transform.GetChild(4).transform.childCount);
-        if (movables %2 != 0)
+        if (movables % 2 != 0)
         {
             Debug.LogError("Uneven amount of movables");
             return false;
@@ -112,9 +130,21 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
         int objectCounter = 0;
         for (int i = 0; i < length; i++)
         {
-            GameObject GravNodeDim1 = wagenDim1.transform.GetChild(0).transform.GetChild(i).gameObject;
-            GameObject GravNodeDim2 = wagenDim2.transform.GetChild(0).transform.GetChild(i).gameObject;
+            // TODO: Check if gravNodeHost is null
+            GameObject GravNodeDim1;
+            GameObject GravNodeDim2;
+            try
+            {
+                GravNodeDim1 = wagenDim1.transform.GetChild(0).transform.GetChild(i).gameObject;
+                GravNodeDim2 = wagenDim2.transform.GetChild(0).transform.GetChild(i).gameObject;
+            }
+            catch (System.Exception)
+            {
+                Debug.LogWarning("GravNode not found");
+                return false;
+            }
 
+            // Check if Object on GravNode is equal to the object at the other Position
             if (GravNodeDim1.GetComponent<gravNodeScript>().getGravNode() == null && GravNodeDim2.GetComponent<gravNodeScript>().getGravNode() == null)
             {
 
@@ -128,8 +158,8 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             {
                 Debug.LogWarning("Anordnung nicht korrekt");
                 return false;
-            }
-            else if (GravNodeDim1.GetComponent<gravNodeScript>().getGravNode().Equals(GravNodeDim2.GetComponent<gravNodeScript>().getGravNode()))
+            }// Equals cant work like this have to change it
+            else if (GravNodeDim1.GetComponent<gravNodeScript>().checkEquals(GravNodeDim2.GetComponent<gravNodeScript>().getGravNode()))
             {
                 objectCounter++;
                 objectCounter++;
@@ -140,12 +170,11 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             }
 
         }
-        if(objectCounter != movables)
+        if (objectCounter != movables)
         {
-            Debug.LogWarning("Not all movables are on a gravNode. " + movables +":totalmovables; " +objectCounter+ ":on a GravNode");
-            return false;
+            Debug.LogWarning("Not all movables are on a gravNode. " + movables + ":totalmovables; " + objectCounter + ":on a GravNode");
+            
         }
-        Debug.Log("Fuse is correct");
-        return true;
+        return false;
     }
 }
