@@ -6,13 +6,14 @@ public class PickupScript : MonoBehaviour, IInteractable
 {
     private bool pickedUp = false;
     private bool moveToClipNode = false;
-    private bool enteredClipNode = false;
     private GameObject clipToObject;
-    private GameObject clipNode;
     private Rigidbody Rigidbody;
     private Outline outline;
-    private GameObject dublicate;
     private Vector3 objectHeight;
+
+    private GameObject radarObject;
+
+
 
     public enum Tag
     {
@@ -52,14 +53,26 @@ public class PickupScript : MonoBehaviour, IInteractable
         pickedUp = !pickedUp;
         // Relese Freezed Position;
         Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        if (!pickedUp)
+        if (!pickedUp) //Put Down
         {
-
-            if (enteredClipNode)
+            
+            if (radarObject.GetComponent<gravNodeScript>().hasValidGravNode())
             {
-                moveToClipNode = true;
+                //We have to check if the Moveable would be in the way of another the gravNode witch is occupied
+                
+                if (radarObject.GetComponent<gravNodeScript>().checkColliders())
+                {
 
-                dublicate.GetComponent<MeshRenderer>().enabled = false;
+                    moveToClipNode = true;
+
+                    radarObject.GetComponent<gravNodeScript>().setgravNodeHost();
+                    radarObject.GetComponent<gravNodeScript>().removeAllDublicates();
+                }
+                else
+                {
+                    Debug.LogWarningFormat("Can't put down {0} because it would block another gravNode", gameObject.name);
+                }
+                
             }
 
 
@@ -69,82 +82,19 @@ public class PickupScript : MonoBehaviour, IInteractable
 
 
         }
-        else
+        else //Pick up
         {
-            if (enteredClipNode)
+            if (radarObject.GetComponent<gravNodeScript>().hasValidGravNode())
             {
-                dublicate.GetComponent<MeshRenderer>().enabled = true;
+                radarObject.GetComponent<gravNodeScript>().releaseGravNodeHost();
+                radarObject.GetComponent<gravNodeScript>().initGravNodeList();
             }
-
             Rigidbody.useGravity = false;
             Debug.Log("Picked up");
         }
 
     }
-    public void enterNode(GameObject clipNode)
-    {
-
-        this.clipNode = clipNode;
-        //This will show that your able to Clip the object;
-        enteredClipNode = true;
-
-
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
-        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
-        if (meshFilter != null && meshRenderer != null)
-        {
-            //Debug.Log("Init clip");
-            dublicate = new GameObject("Silhouette of: " + gameObject.name);
-            // Setts Scale and Postion of the dublicate
-            dublicate.transform.localScale = transform.localScale;
-            dublicate.transform.position = clipNode.transform.position + objectHeight;
-
-
-            MeshFilter newMeshFilter = dublicate.AddComponent<MeshFilter>();
-            newMeshFilter.sharedMesh = meshFilter.sharedMesh;
-            MeshRenderer newMeshRenderer = dublicate.AddComponent<MeshRenderer>();
-
-
-
-            Outline outline = dublicate.AddComponent<Outline>();
-            outline.OutlineColor = new Color(0, 0, 0, 0.5f);
-            outline.OutlineMode = Outline.Mode.OutlineAll;
-            outline.OutlineWidth = 10;
-
-            
-
-            //remove first material (the one with the pink color) it does not work!!!!
-            Material[] materials = dublicate.GetComponent<Renderer>().materials;
-            if (newMeshRenderer && newMeshFilter && materials != null)
-            {
-                Material[] buffer = new Material[2];
-                for (int i = 0; i < buffer.Length; i++)
-                {
-
-                    buffer[i] = materials[i + 1];
-                }
-                newMeshRenderer.sharedMaterials = buffer;
-            }
-
-            //Workaround to update meshRenderer
-            dublicate.GetComponent<Outline>().enabled = false;
-            dublicate.GetComponent<Outline>().enabled = true;
-        }
-
-        if (!pickedUp)
-        {
-            dublicate.GetComponent<MeshRenderer>().enabled = false;
-
-        }
-    }
-    public void exitClipNode()
-    {
-        enteredClipNode = false;
-        moveToClipNode = false;
-        clipNode = null;
-        Destroy(dublicate);
-
-    }
+   
 
     // Start is called before the first frame update
     void Start()
@@ -153,6 +103,8 @@ public class PickupScript : MonoBehaviour, IInteractable
         Rigidbody = GetComponent<Rigidbody>();
         outline = GetComponent<Outline>();
         objectHeight = new Vector3(0, transform.lossyScale.y * 0.5f, 0);
+        radarObject = gameObject.transform.GetChild(0).gameObject;
+
     }
 
     // Update is called once per frame
@@ -165,8 +117,8 @@ public class PickupScript : MonoBehaviour, IInteractable
         }
         else if (moveToClipNode)
         {
-            //Move to clipNode
-            Vector3 clipPosition = clipNode.transform.position + objectHeight;
+            //Move to gravNode
+            Vector3 clipPosition = radarObject.GetComponent<gravNodeScript>().getGravNodeHost().transform.position + objectHeight;
             Rigidbody.velocity = (clipPosition - transform.position) * 10;
             Rigidbody.useGravity = false;
             if (Vector3.Distance(transform.position, clipPosition) <= 0.1f)
@@ -179,5 +131,9 @@ public class PickupScript : MonoBehaviour, IInteractable
             }
         }
 
+    }
+    public bool getPickedup()
+    {
+        return pickedUp?true:false;
     }
 }

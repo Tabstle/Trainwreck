@@ -29,6 +29,8 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
     [SerializeField] private GameObject lightRiddleControllerObjDim1;
     [SerializeField] private GameObject lightRiddleControllerObjDim2;
 
+    //switches
+    [SerializeField] private bool nodeCanbeEmpty = true;
 
     public void Interact()
     {
@@ -98,6 +100,10 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
                         Debug.LogWarning("Lights are not equal");
                         return false;
                     }
+                    else
+                    {
+                        Debug.Log("Lights are equal");
+                    }
                 }
             }
             
@@ -128,6 +134,8 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             return false;
         }
         int objectCounter = 0;
+        int wrongObjectCounter = 0;
+        bool acceptable = true;
         for (int i = 0; i < length; i++)
         {
             // TODO: Check if gravNodeHost is null
@@ -145,36 +153,46 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             }
 
             // Check if Object on GravNode is equal to the object at the other Position
-            if (GravNodeDim1.GetComponent<gravNodeScript>().getGravNode() == null && GravNodeDim2.GetComponent<gravNodeScript>().getGravNode() == null)
+            if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() == null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() == null)
             {
-
+                acceptable = nodeCanbeEmpty;
+                continue;
             }
-            else if (GravNodeDim1.GetComponent<gravNodeScript>().getGravNode() == null && GravNodeDim2.GetComponent<gravNodeScript>().getGravNode() != null)
+            else if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() == null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() != null)
             {
-                Debug.LogWarning("Anordnung nicht korrekt");
-                return false;
+                wrongObjectCounter++;
+                continue;
             }
-            else if (GravNodeDim1.GetComponent<gravNodeScript>().getGravNode() != null && GravNodeDim2.GetComponent<gravNodeScript>().getGravNode() == null)
+            else if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() != null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() == null)
             {
-                Debug.LogWarning("Anordnung nicht korrekt");
-                return false;
+                wrongObjectCounter++;
+                continue;
             }// Equals cant work like this have to change it
-            else if (GravNodeDim1.GetComponent<gravNodeScript>().checkEquals(GravNodeDim2.GetComponent<gravNodeScript>().getGravNode()))
-            {
-                objectCounter++;
-                objectCounter++;
-            }
             else
             {
-                objectCounter++;
+                if (GravNodeDim1.GetComponent<gravNodeDubScript>().checkEquals(GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj()))
+                {
+                    objectCounter++;
+                    objectCounter++;
+                }
+                else
+                {
+                    wrongObjectCounter++;
+                    wrongObjectCounter++;
+                }
             }
-
-        }
-        if (objectCounter != movables)
-        {
-            Debug.LogWarning("Not all movables are on a gravNode. " + movables + ":totalmovables; " + objectCounter + ":on a GravNode");
             
+        
         }
-        return false;
+        if (objectCounter == movables && acceptable)
+        {
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Not all movables are on a gravNode. \n" + movables + ":totalmovables;  " + objectCounter + ":correct placed; " + wrongObjectCounter + ":wrong placed; " + (movables - objectCounter - wrongObjectCounter) + ":not placed");
+            return false;
+        }
+       
     }
 }

@@ -29,9 +29,8 @@ public class Interact : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
         {
-
             if (pickedUp)
-            {
+            {     
                 interactObj.Interact();
                 pickedUp = !pickedUp;
                 interactObj = null;
@@ -42,6 +41,8 @@ public class Interact : MonoBehaviour
             Debug.DrawRay(camRay.origin, camRay.direction * InteractionDistance, Color.red, 1f);
             if (Physics.Raycast(camRay, out RaycastHit HitInfo, InteractionDistance, InteractMask))
             {
+                Debug.Log("Hit something");
+                Debug.Log(HitInfo.collider.gameObject.name);
                 if(HitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
                 {
                     if (HitInfo.collider.gameObject.CompareTag("doorBtn"))
@@ -52,6 +53,7 @@ public class Interact : MonoBehaviour
                     }
                     else if (HitInfo.collider.gameObject.CompareTag("movable"))
                     {
+                        Debug.Log("Hit movable");
                         hitObject = HitInfo.collider.gameObject;
                         this.interactObj = interactObj;
                         pickedUp = !pickedUp;

@@ -19,7 +19,7 @@ TagManager:
   - Ground
   - Interactable
   - Player
-  - Clipping
+  - gravClip
   - 
   - movingNoColl
   - 

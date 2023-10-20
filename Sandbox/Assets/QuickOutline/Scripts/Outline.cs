@@ -150,7 +150,7 @@ public class Outline : MonoBehaviour {
     }
   }
 
-  void OnDestroy() {
+   void OnDestroy() {
 
     // Destroy material instances
     Destroy(outlineMaskMaterial);
