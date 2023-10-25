@@ -136,4 +136,8 @@ public class PickupScript : MonoBehaviour, IInteractable
     {
         return pickedUp?true:false;
     }
+    public void setMoveToClipNode(bool b)
+    {
+        moveToClipNode = b;
+    }
 }

@@ -11,6 +11,7 @@ public class gravNodeScript : MonoBehaviour
     private List<GameObject> allgravNodelist = new List<GameObject>();
     private GameObject movableObj = null;
     private GameObject closestNode = null;
+    [SerializeField] private GameObject initGravNode; // if u wanna have an object directli on an gravNode u  have to reference it here;
 
     private void OnTriggerEnter(Collider colliding)
     {
@@ -95,24 +96,52 @@ public class gravNodeScript : MonoBehaviour
 
     public bool checkColliders()
     {
-        Debug.Log("Check Colliders");
-        foreach (GameObject node in allgravNodelist)
+        // Has to be tested
+        GameObject raycastPos = getClosestGravNode();
+        Collider[] nodeColliders = Physics.OverlapSphere(raycastPos.transform.position,4f,LayerMask.GetMask("gravClip"));
+
+        foreach (Collider node in nodeColliders)
         {
-            Debug.LogWarning("Node: " + node.name);
-            if (node.GetComponent<gravNodeDubScript>().getOccupied())
+            if (!node.gameObject.Equals(raycastPos) && node.gameObject.GetComponent<gravNodeDubScript>().getOccupied())
             {
-                Collider[] colliders = Physics.OverlapSphere(getClosestGravNode().transform.position, GetComponent<SphereCollider>().radius, LayerMask.GetMask("Interactable"));
-                foreach (Collider collider in colliders)
+                Vector3 direction = node.transform.position - raycastPos.transform.position;
+                Renderer renderer = movableObj.GetComponent<Renderer>();
+                Bounds bounds = renderer.bounds;
+                float distance = bounds.extents.magnitude;
+                if (Physics.Raycast(raycastPos.transform.position, direction, distance, LayerMask.GetMask("Interactable")))
                 {
-                    Debug.LogWarning("Collider: " + collider.gameObject.name);
-                    if (collider.gameObject == node.GetComponent<gravNodeDubScript>().getMovableObj())
-                    {
-                        return false;
-                    }
+                    Debug.LogWarningFormat("Shit i cant place {0} because of: {1} ", movableObj.name ,node.gameObject.name);
+                    return false;
                 }
             }
         }
         return true;
+       
+
+
+
+
+
+
+        ////
+        //Debug.Log("Check Colliders");
+        //foreach (GameObject node in allgravNodelist)
+        //{
+        //    Debug.LogWarning("Node: " + node.name);
+        //    if (node.GetComponent<gravNodeDubScript>().getOccupied())
+        //    {
+        //        Collider[] colliders = Physics.OverlapSphere(getClosestGravNode().transform.position, GetComponent<SphereCollider>().radius, LayerMask.GetMask("Interactable")); 
+        //        foreach (Collider collider in colliders)
+        //        {
+        //            Debug.LogWarning("Collider: " + collider.gameObject.name);
+        //            if (collider.gameObject == node.GetComponent<gravNodeDubScript>().getMovableObj())
+        //            {
+        //                return false;
+        //            }
+        //        }
+        //    }
+        //}
+        //return true;
     }
 
     public GameObject getGravNodeHost()
@@ -161,9 +190,23 @@ public class gravNodeScript : MonoBehaviour
         }
     }
      
-    
+    private void initialiseGravNode() //
+    {
+        gravNodeHost = initGravNode;
+        allgravNodelist.Add(gravNodeHost);
+        gravNodeList.Add(gravNodeHost);
+        gravNodeHost.GetComponent<gravNodeDubScript>().setOccupied(true, movableObj);
+        movableObj.GetComponent<PickupScript>().setMoveToClipNode(true);
+
+    }
+
+
     public void Start()
     {
         movableObj = transform.parent.gameObject;
+        if(initGravNode != null)
+        {
+            initialiseGravNode();
+        }
     }
 }
