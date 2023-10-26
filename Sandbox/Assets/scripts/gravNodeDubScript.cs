@@ -40,7 +40,7 @@ public class gravNodeDubScript : MonoBehaviour
             newMeshRenderer.material = this.material;
 
             Outline outline = dublicate.AddComponent<Outline>();
-            outline.OutlineColor = new Color(0, 0, 0, 0.5f);
+            outline.OutlineColor = new Color(1, 1, 1, 0.4f);
             outline.OutlineMode = Outline.Mode.OutlineAll;
             outline.OutlineWidth = 10;
 
@@ -71,13 +71,18 @@ public class gravNodeDubScript : MonoBehaviour
         return movableObj;
     }
 
+    public GameObject getDublicate()
+    {
+        return dublicate;
+    }
+
     public void setMain()
     {
-        dublicate.GetComponent<Outline>().OutlineColor = new Color(0, 0, 0, 0.5f);
+        dublicate.GetComponent<Outline>().OutlineColor = new Color(1, 1, 1, 0.4f);
     }
     public void setSecondary()
     {
-        dublicate.GetComponent<Outline>().OutlineColor = new Color(0, 0, 0, 0.1f);
+        dublicate.GetComponent<Outline>().OutlineColor = new Color(1, 1, 1, 0.1f);
     }
 
     public void destroyDublicate()

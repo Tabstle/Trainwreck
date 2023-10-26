@@ -19,7 +19,6 @@ public class gravNodeScript : MonoBehaviour
         {
             if(!gravNodeList.Contains(colliding.gameObject))
             {
-               Debug.Log("Trigger Enter clipPoint not in list");
                allgravNodelist.Add(colliding.gameObject);
                gravNodeList.Add(colliding.gameObject);
                colliding.gameObject.GetComponent<gravNodeDubScript>().createDublicate(movableObj);
@@ -33,7 +32,6 @@ public class gravNodeScript : MonoBehaviour
         {
             if (gravNodeList.Contains(colliding.gameObject))
             {
-                Debug.Log("Trigger Exit clipPoint in list");
                 allgravNodelist.Remove(colliding.gameObject);
                 gravNodeList.Remove(colliding.gameObject);
                 colliding.gameObject.GetComponent<gravNodeDubScript>().destroyDublicate();
@@ -98,6 +96,7 @@ public class gravNodeScript : MonoBehaviour
     {
         // Has to be tested
         GameObject raycastPos = getClosestGravNode();
+        if (raycastPos == null) return true;
         Collider[] nodeColliders = Physics.OverlapSphere(raycastPos.transform.position,4f,LayerMask.GetMask("gravClip"));
 
         foreach (Collider node in nodeColliders)
@@ -116,32 +115,13 @@ public class gravNodeScript : MonoBehaviour
             }
         }
         return true;
-       
+    }
 
-
-
-
-
-
-        ////
-        //Debug.Log("Check Colliders");
-        //foreach (GameObject node in allgravNodelist)
-        //{
-        //    Debug.LogWarning("Node: " + node.name);
-        //    if (node.GetComponent<gravNodeDubScript>().getOccupied())
-        //    {
-        //        Collider[] colliders = Physics.OverlapSphere(getClosestGravNode().transform.position, GetComponent<SphereCollider>().radius, LayerMask.GetMask("Interactable")); 
-        //        foreach (Collider collider in colliders)
-        //        {
-        //            Debug.LogWarning("Collider: " + collider.gameObject.name);
-        //            if (collider.gameObject == node.GetComponent<gravNodeDubScript>().getMovableObj())
-        //            {
-        //                return false;
-        //            }
-        //        }
-        //    }
-        //}
-        //return true;
+    public void shakeDublicate()
+    {
+        Debug.Log("Closest Node DUblicate : " + getClosestGravNode().GetComponent<gravNodeDubScript>().getDublicate());
+        GameObject dublicate = getClosestGravNode().GetComponent<gravNodeDubScript>().getDublicate();
+        this.GetComponent<shakeScript>().shakeObj(dublicate, 0.2f);
     }
 
     public GameObject getGravNodeHost()
@@ -188,6 +168,11 @@ public class gravNodeScript : MonoBehaviour
         {
             node.GetComponent<gravNodeDubScript>().destroyDublicate();
         }
+    }
+
+    public void clearList()
+    {
+        gravNodeList.Clear();
     }
      
     private void initialiseGravNode() //

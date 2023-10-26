@@ -104,8 +104,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 15, z: 0}
+  m_Radius: 0.75
+  m_Center: {x: 0, y: 12, z: 0}
 --- !u!114 &679325395927963177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,4 +119,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movableObj: {fileID: 0}
-  material: {fileID: 0}
+  material: {fileID: 2100000, guid: 0c68d8fd7da7ccb4cb0de0e5c4640250, type: 2}

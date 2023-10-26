@@ -29,13 +29,23 @@ public class Interact : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
         {
+            
             if (pickedUp)
-            {     
-                interactObj.Interact();
-                pickedUp = !pickedUp;
-                interactObj = null;
-                hitObject = null;
-                return;
+            {
+                if (hitObject.transform.GetChild(0).GetComponent<gravNodeScript>().checkColliders())
+                {
+                    interactObj.Interact();
+                    pickedUp = !pickedUp;
+                    interactObj = null;
+                    hitObject = null;
+                    return;
+                }
+                else
+                {
+                    interactObj.Interact();
+                    return;
+                }
+                
             }
             Ray camRay = PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             Debug.DrawRay(camRay.origin, camRay.direction * InteractionDistance, Color.red, 1f);
@@ -80,6 +90,11 @@ public class Interact : MonoBehaviour
         bool pickedUp = this.pickedUp;
         return pickedUp;
     }
+    public void setPickedUp(bool pickedUp)
+    {
+        this.pickedUp = pickedUp;
+    }
+    
     public void  letgo()
     {
         if(pickedUp) { 

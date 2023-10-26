@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1689619001001278538}
   - component: {fileID: 8576726679893012897}
   - component: {fileID: 2906168638547332826}
+  - component: {fileID: 4641648013035437645}
   m_Layer: 12
   m_Name: radar
   m_TagString: Untagged
@@ -67,6 +68,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initGravNode: {fileID: 0}
+--- !u!114 &4641648013035437645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2709961900454409848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f46cff23f4f74f4085e18eaa81decfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeMagnitude: 0.1
 --- !u!1 &3450595998007504487
 GameObject:
   m_ObjectHideFlags: 0

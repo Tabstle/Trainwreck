@@ -12,6 +12,7 @@ public class PickupScript : MonoBehaviour, IInteractable
     private Vector3 objectHeight;
 
     private GameObject radarObject;
+    private GameObject player;
 
 
 
@@ -51,7 +52,7 @@ public class PickupScript : MonoBehaviour, IInteractable
     public void Interact()
     {
         pickedUp = !pickedUp;
-        // Relese Freezed Position;
+        // Release Freezed Position;
         Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         if (!pickedUp) //Put Down
         {
@@ -67,12 +68,20 @@ public class PickupScript : MonoBehaviour, IInteractable
 
                     radarObject.GetComponent<gravNodeScript>().setgravNodeHost();
                     radarObject.GetComponent<gravNodeScript>().removeAllDublicates();
+
                 }
                 else
                 {
+                    
+                    radarObject.GetComponent<gravNodeScript>().shakeDublicate();
                     Debug.LogWarningFormat("Can't put down {0} because it would block another gravNode", gameObject.name);
+                    radarObject.GetComponent<gravNodeScript>().clearList();
+                    pickedUp = true;
+                    player.GetComponent<Interact>().setPickedUp(true);
+                    return;
                 }
-                
+
+
             }
 
 
@@ -99,6 +108,7 @@ public class PickupScript : MonoBehaviour, IInteractable
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
         clipToObject = GameObject.Find("PickUpPoint");
         Rigidbody = GetComponent<Rigidbody>();
         outline = GetComponent<Outline>();
