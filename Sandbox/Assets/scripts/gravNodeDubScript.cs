@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class gravNodeDubScript : MonoBehaviour
@@ -40,7 +41,15 @@ public class gravNodeDubScript : MonoBehaviour
             newMeshRenderer.material = this.material;
 
             Outline outline = dublicate.AddComponent<Outline>();
-            outline.OutlineColor = new Color(1, 1, 1, 0.4f);
+            if (!meshObject.transform.GetChild(0).GetComponent<gravNodeScript>().checkColliders())
+            {
+                outline.OutlineColor  = new Color(0.85f, 0.4f, 0.4f, 0.4f);
+            }
+            else
+            {
+                outline.OutlineColor = new Color(1, 1, 1, 0.4f);
+            }
+            
             outline.OutlineMode = Outline.Mode.OutlineAll;
             outline.OutlineWidth = 10;
 
@@ -83,6 +92,12 @@ public class gravNodeDubScript : MonoBehaviour
     public void setSecondary()
     {
         dublicate.GetComponent<Outline>().OutlineColor = new Color(1, 1, 1, 0.1f);
+    }
+
+    public void setError()
+    {
+        dublicate.GetComponent<Outline>().OutlineColor = new Color(0.85f, 0.4f, 0.4f, 0.4f);
+
     }
 
     public void destroyDublicate()

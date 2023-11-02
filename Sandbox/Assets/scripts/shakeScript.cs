@@ -5,7 +5,7 @@ using UnityEngine;
 public class shakeScript : MonoBehaviour
 {
 
-    [SerializeField] private float shakeMagnitude = 0.1f;
+    [SerializeField] private float shakeMagnitude = 0.05f;
     private GameObject objectToShake;
 
     private Vector3 originalPosition;
@@ -15,7 +15,7 @@ public class shakeScript : MonoBehaviour
 
     private void Update()
     {
-        if (shaking == true)
+        if (shaking == true && objectToShake != null)
         {
             if (shakeTimer > 0)
             {

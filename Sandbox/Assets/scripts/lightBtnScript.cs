@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class lightScript : MonoBehaviour, IInteractable
+public class lightBtnScript : MonoBehaviour, IInteractable
 {
 
-    [SerializeField] private GameObject lightRiddleControllerObj;
+    private GameObject lightRiddleControllerObj;
     private LightRiddleController lightRiddleController;
     [SerializeField] private Vector3 direction;
     [SerializeField] private float speed = 0.5f;
@@ -30,7 +30,6 @@ public class lightScript : MonoBehaviour, IInteractable
 
      void Start()
     {
-        lightRiddleController = lightRiddleControllerObj.GetComponent<LightRiddleController>();
         length = new Vector3(.05f, .05f, .05f); //TODO: has to bee made dynamic
         targetpos = Vector3.Scale(length, direction);
         startpos = transform.position;
@@ -57,6 +56,10 @@ public class lightScript : MonoBehaviour, IInteractable
                
             }
         }
+    }
+    public void setRiddleController (LightRiddleController o)
+    {
+        lightRiddleController = o.GetComponent<LightRiddleController>();
     }
 
 }

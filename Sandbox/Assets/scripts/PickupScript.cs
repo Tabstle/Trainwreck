@@ -75,7 +75,7 @@ public class PickupScript : MonoBehaviour, IInteractable
                     
                     radarObject.GetComponent<gravNodeScript>().shakeDublicate();
                     Debug.LogWarningFormat("Can't put down {0} because it would block another gravNode", gameObject.name);
-                    radarObject.GetComponent<gravNodeScript>().clearList();
+                    //radarObject.GetComponent<gravNodeScript>().clearList();
                     pickedUp = true;
                     player.GetComponent<Interact>().setPickedUp(true);
                     return;
@@ -83,6 +83,7 @@ public class PickupScript : MonoBehaviour, IInteractable
 
 
             }
+
 
 
             Rigidbody.velocity = Vector3.zero;
@@ -95,10 +96,24 @@ public class PickupScript : MonoBehaviour, IInteractable
         {
             if (radarObject.GetComponent<gravNodeScript>().hasValidGravNode())
             {
-                radarObject.GetComponent<gravNodeScript>().releaseGravNodeHost();
+                // Grav Node falls down, it has no host so we cant release it
+                if(radarObject.GetComponent<gravNodeScript>().getGravNodeHost() !=  null)
+                {
+                    radarObject.GetComponent<gravNodeScript>().releaseGravNodeHost();
+                }
                 radarObject.GetComponent<gravNodeScript>().initGravNodeList();
             }
-            Rigidbody.useGravity = false;
+            //else
+            //{
+            //    radarObject.GetComponent<gravNodeScript>().initGravNodeList();
+
+            //    if (radarObject.GetComponent<gravNodeScript>().hasValidGravNode())
+            //    {
+            //        radarObject.GetComponent<gravNodeScript>().releaseGravNodeHost();
+            //        radarObject.GetComponent<gravNodeScript>().initGravNodeList();
+            //    }
+            //}
+                Rigidbody.useGravity = false;
             Debug.Log("Picked up");
         }
 

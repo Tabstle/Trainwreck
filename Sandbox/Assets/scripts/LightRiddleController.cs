@@ -46,10 +46,15 @@ public class LightRiddleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        button1.GetComponent<lightBtnScript>().setRiddleController(this);
+        button2.GetComponent<lightBtnScript>().setRiddleController(this);
+        button3.GetComponent<lightBtnScript>().setRiddleController(this);
+
         light1.SetActive(light1Active);
         light2.SetActive(light2Active);
         light3.SetActive(light3Active);
         light4.SetActive(light4Active);
+
     }
 
     public bool getState(GameObject o)
@@ -65,6 +70,16 @@ public class LightRiddleController : MonoBehaviour
             return disableBtn3;
         }
         return false;
+    }
+
+    public bool[] getLightStates()
+    {
+        bool[] lightStates = new bool[4];
+        lightStates[0] = light1Active;
+        lightStates[1] = light2Active;
+        lightStates[2] = light3Active;
+        lightStates[3] = light4Active;
+        return lightStates;
     }
 }
 

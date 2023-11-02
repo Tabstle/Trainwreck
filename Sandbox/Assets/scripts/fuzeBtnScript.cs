@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class fuzeBtnScript : MonoBehaviour, IInteractable
 {
 
     //Movement Variables
-    [SerializeField] private Vector3 direction = new Vector3(0,1,0);
+    [SerializeField] private Vector3 direction = new Vector3(0, 1, 0);
     [SerializeField] private float speed = 0.5f;
     private bool movingTowardsTarget = true;
     private Vector3 startpos;
@@ -41,7 +38,7 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
         {
             Debug.Log("Fuse is correct");
         }
-        
+
 
 
     }
@@ -53,13 +50,13 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
         startpos = transform.position;
     }
 
-    
+
 
     void Update()
     {
         if (blocked)
         {
-            Vector3 target = movingTowardsTarget ? (targetpos + startpos) : startpos;   
+            Vector3 target = movingTowardsTarget ? (targetpos + startpos) : startpos;
             transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
             if (Vector3.Distance(transform.position, target) < 0.01f)
             {
@@ -82,42 +79,43 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
 
     private bool checkFuse()
     {
-        bool fuseCorrect = false;
+        bool fuseCorrect;
+
+
+
         //Check for LightRiddle
+        bool lightRiddleCorrect = true;
         if (lightRiddleControllerObjDim1 != null && lightRiddleControllerObjDim2 != null)
         {
-            int children = lightRiddleControllerObjDim1.transform.GetChild(0).transform.childCount;
-            int children2 = lightRiddleControllerObjDim2.transform.GetChild(0).transform.childCount;
+            bool[] dim1Lights = lightRiddleControllerObjDim1.GetComponent<LightRiddleController>().getLightStates();
+            bool[] dim2Lights = lightRiddleControllerObjDim2.GetComponent<LightRiddleController>().getLightStates();
 
-            if (children == children2)
+            for (int i = 0; i < dim1Lights.Length; i++)
             {
-                //Loops all lights
-                for (int i = 0; i < children; i++)
+                if (dim1Lights[i] != dim2Lights[i])
                 {
-                    // as soon as light[i] is not equal to light[i] return false
-                    if (!(lightRiddleControllerObjDim1.transform.GetChild(0).transform.GetChild(i).gameObject.activeSelf == lightRiddleControllerObjDim2.transform.GetChild(0).transform.GetChild(i).gameObject.activeSelf))
-                    {
-                        Debug.LogWarning("Lights are not equal");
-                        return false;
-                    }
-                    else
-                    {
-                        Debug.Log("Lights are equal");
-                    }
+                    lightRiddleCorrect = false;
+                    Debug.Log("LightRiddle is not correct");
+                    break;
                 }
+            }
+            if (!lightRiddleCorrect)
+            {
+                Debug.Log("LightRiddle is correct");
             }
             
         }
 
-        if (checkGravNodes())
+        //Check GravNodes
+        if (checkGravNodes() && lightRiddleCorrect)
         {
             fuseCorrect = true;
-            Debug.Log("GraveNodes are correct");
+            Debug.Log("GraveNodes and Lights are correct");
         }
         else
         {
             fuseCorrect = false;
-            Debug.Log("GraveNodes are not correct");
+            Debug.Log("GraveNodes and Lights are not correct");
         }
 
         return fuseCorrect;
@@ -125,12 +123,15 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
 
     private bool checkGravNodes()
     {
+
+        
+
         //Check  GravNodes
-        int length = wagenDim1.transform.GetChild(0).transform.childCount;
-        int movables = (wagenDim1.transform.GetChild(4).transform.childCount + wagenDim2.transform.GetChild(4).transform.childCount);
+        int length = wagenDim1.transform.GetChild(1).transform.childCount;
+        int movables = (wagenDim1.transform.GetChild(2).transform.childCount + wagenDim2.transform.GetChild(2).transform.childCount);
         if (movables % 2 != 0)
         {
-            Debug.LogError("Uneven amount of movables");
+            Debug.LogError("Uneven amount of movables (Du musst die anzahl aller objecte \"gerade\" halten)");
             return false;
         }
         int objectCounter = 0;
@@ -143,12 +144,12 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             GameObject GravNodeDim2;
             try
             {
-                GravNodeDim1 = wagenDim1.transform.GetChild(0).transform.GetChild(i).gameObject;
-                GravNodeDim2 = wagenDim2.transform.GetChild(0).transform.GetChild(i).gameObject;
+                GravNodeDim1 = wagenDim1.transform.GetChild(1).transform.GetChild(i).gameObject;
+                GravNodeDim2 = wagenDim2.transform.GetChild(1).transform.GetChild(i).gameObject;
             }
             catch (System.Exception)
             {
-                Debug.LogWarning("GravNode not found");
+                Debug.LogWarning("GravNodes not found");
                 return false;
             }
 
@@ -181,8 +182,8 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
                     wrongObjectCounter++;
                 }
             }
-            
-        
+
+
         }
         if (objectCounter == movables && acceptable)
         {
@@ -193,6 +194,6 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             Debug.LogWarning("Not all movables are on a gravNode. \n" + movables + ":totalmovables;  " + objectCounter + ":correct placed; " + wrongObjectCounter + ":wrong placed; " + (movables - objectCounter - wrongObjectCounter) + ":not placed");
             return false;
         }
-       
+
     }
 }
