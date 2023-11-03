@@ -193,7 +193,7 @@ Transform:
   m_LocalScale: {x: 3, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1933351867}
+  m_Father: {fileID: 1477799419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &98534094
 BoxCollider:
@@ -424,7 +424,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
+  m_Radius: 0.45
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
@@ -478,6 +478,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 182474610}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &189029458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 189029459}
+  m_Layer: 0
+  m_Name: Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &189029459
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189029458}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1990560434}
+  - {fileID: 2013866779}
+  - {fileID: 1967375840}
+  m_Father: {fileID: 1921382086}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &203054882
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -571,7 +605,7 @@ Transform:
   m_LocalScale: {x: 3, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1933351867}
+  m_Father: {fileID: 1477799419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &207141184
 BoxCollider:
@@ -676,7 +710,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1933351867}
+  m_Father: {fileID: 1477799419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &214851499
 BoxCollider:
@@ -781,7 +815,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dd5cb56d7301a49998267615681f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightRiddleControllerObj: {fileID: 736798818}
   direction: {x: 0, y: -1, z: 0}
   speed: 0.5
 --- !u!65 &217597999
@@ -1843,11 +1876,11 @@ Transform:
   m_GameObject: {fileID: 588441310}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.654, y: 1.658, z: 12.72}
+  m_LocalPosition: {x: 0.6539993, y: 1.658, z: 12.72}
   m_LocalScale: {x: 1.2, y: 2.3, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1921382086}
+  m_Father: {fileID: 1741302335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &588441312
 BoxCollider:
@@ -2133,38 +2166,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1631516551978151194, guid: 47af4c4ad3ad26d4f96c096d61440b87, type: 3}
   m_PrefabInstance: {fileID: 878348047}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &697085315
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 697085316}
-  m_Layer: 0
-  m_Name: Fuse
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &697085316
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697085315}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1967375840}
-  m_Father: {fileID: 998592561}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &711404763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2317,7 +2318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dd5cb56d7301a49998267615681f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightRiddleControllerObj: {fileID: 736798818}
   direction: {x: 0, y: -1, z: 0}
   speed: 0.5
 --- !u!65 &720878661
@@ -2758,7 +2758,7 @@ GameObject:
   m_Component:
   - component: {fileID: 921283114}
   m_Layer: 0
-  m_Name: Lights
+  m_Name: LightRiddleLights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2772,7 +2772,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 921283113}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2781,7 +2781,7 @@ Transform:
   - {fileID: 1909408523}
   - {fileID: 1586847252}
   - {fileID: 1238881790}
-  m_Father: {fileID: 1154027636}
+  m_Father: {fileID: 1741302335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &970586114
 PrefabInstance:
@@ -2873,12 +2873,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 787115450}
-  - {fileID: 1154027636}
-  - {fileID: 1353138964}
-  - {fileID: 697085316}
-  - {fileID: 1251539473}
   - {fileID: 1933351867}
+  - {fileID: 787115450}
+  - {fileID: 1251539473}
   - {fileID: 1921382086}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2914,7 +2911,7 @@ Transform:
   m_LocalScale: {x: 3, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1933351867}
+  m_Father: {fileID: 1477799419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1010488186
 BoxCollider:
@@ -3618,70 +3615,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dd5cb56d7301a49998267615681f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightRiddleControllerObj: {fileID: 1154027635}
   direction: {x: 0, y: -1, z: 0}
   speed: 0.5
---- !u!1 &1154027635
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1154027636}
-  - component: {fileID: 1154027637}
-  m_Layer: 0
-  m_Name: LightRiddle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1154027636
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1154027635}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 921283114}
-  - {fileID: 1990560434}
-  - {fileID: 1471644197}
-  m_Father: {fileID: 998592561}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1154027637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1154027635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c04a11920b502645a94a577406d2098, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  light1: {fileID: 1097263045}
-  light2: {fileID: 1909408522}
-  light3: {fileID: 1586847251}
-  light4: {fileID: 1238881789}
-  button1: {fileID: 1117810222}
-  button2: {fileID: 1852318632}
-  button3: {fileID: 2033045251}
-  disableBtn1: 0
-  disableBtn2: 1
-  disableBtn3: 0
-  light1Active: 0
-  light2Active: 1
-  light3Active: 0
-  light4Active: 0
 --- !u!1 &1211752787
 GameObject:
   m_ObjectHideFlags: 0
@@ -3733,7 +3668,7 @@ MonoBehaviour:
   speed: 0.1
   wagenDim1: {fileID: 998592560}
   wagenDim2: {fileID: 1981910196}
-  lightRiddleControllerObjDim1: {fileID: 1154027635}
+  lightRiddleControllerObjDim1: {fileID: 0}
   lightRiddleControllerObjDim2: {fileID: 736798818}
   nodeCanbeEmpty: 1
 --- !u!65 &1211752790
@@ -3891,12 +3826,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1229140179}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.84, y: 1.65, z: 12.72}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.8400002, y: 1.6500001, z: 12.72}
   m_LocalScale: {x: 4.2, y: 2.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1933351867}
+  m_Father: {fileID: 1477799419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1229140181
 BoxCollider:
@@ -4566,38 +4501,6 @@ Transform:
   - {fileID: 1329896507}
   m_Father: {fileID: 1981910197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1353138963
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1353138964}
-  m_Layer: 0
-  m_Name: Doors
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1353138964
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353138963}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2013866779}
-  m_Father: {fileID: 998592561}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1357536642
 GameObject:
   m_ObjectHideFlags: 0
@@ -4958,7 +4861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dd5cb56d7301a49998267615681f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightRiddleControllerObj: {fileID: 736798818}
   direction: {x: 0, y: -1, z: 0}
   speed: 0.5
 --- !u!65 &1411430601
@@ -5349,13 +5251,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Picture1
       objectReference: {fileID: 0}
-    - target: {fileID: 5919761689272862723, guid: a9dc2139234830742bca128de7c98a22, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 5919761689272862723, guid: a9dc2139234830742bca128de7c98a22, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
+    - target: {fileID: 5917861524551440989, guid: a9dc2139234830742bca128de7c98a22, type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 5919761689272862723, guid: a9dc2139234830742bca128de7c98a22, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5412,7 +5310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1471644197}
   m_Layer: 0
-  m_Name: Statics
+  m_Name: LightRiddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5426,7 +5324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1471644196}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5437,7 +5335,45 @@ Transform:
   - {fileID: 138877894}
   - {fileID: 575887450}
   - {fileID: 1825010692}
-  m_Father: {fileID: 1154027636}
+  m_Father: {fileID: 1933351867}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1477799418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1477799419}
+  m_Layer: 7
+  m_Name: Wagon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1477799419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477799418}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1010488185}
+  - {fileID: 207141183}
+  - {fileID: 98534093}
+  - {fileID: 1229140180}
+  - {fileID: 2097039795}
+  - {fileID: 214851498}
+  - {fileID: 1695206122}
+  m_Father: {fileID: 1933351867}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1511458097
 GameObject:
@@ -5571,7 +5507,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.6
+  m_Radius: 0.45
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -5586,7 +5522,7 @@ Transform:
   m_GameObject: {fileID: 1552519592}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.6, y: 3.476, z: -3.8}
+  m_LocalPosition: {x: -23.86, y: 3.476, z: -2.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5628,7 +5564,7 @@ MonoBehaviour:
   gravity: -19.62
   jumpHeight: 1.2
   groundCheck: {fileID: 594586687}
-  groundDistance: 0.4
+  groundDistance: 0.35
   groundMask:
     serializedVersion: 2
     m_Bits: 128
@@ -6097,7 +6033,41 @@ Transform:
   m_LocalScale: {x: 10, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1933351867}
+  m_Father: {fileID: 1477799419}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1741302334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1741302335}
+  m_Layer: 0
+  m_Name: Noclip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1741302335
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741302334}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2122059688}
+  - {fileID: 588441311}
+  - {fileID: 921283114}
+  m_Father: {fileID: 1921382086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1782170095
 GameObject:
@@ -6536,7 +6506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dd5cb56d7301a49998267615681f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightRiddleControllerObj: {fileID: 1154027635}
   direction: {x: 0, y: -1, z: 0}
   speed: 0.5
 --- !u!1 &1854784374
@@ -6756,8 +6725,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2122059688}
-  - {fileID: 588441311}
+  - {fileID: 189029459}
+  - {fileID: 1741302335}
   m_Father: {fileID: 998592561}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1930581846
@@ -6778,7 +6747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5919761689272862723, guid: 908e9c747209f154abc6b0e98103493c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.7421074
+      value: 0.7460003
       objectReference: {fileID: 0}
     - target: {fileID: 5919761689272862723, guid: 908e9c747209f154abc6b0e98103493c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6794,15 +6763,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5919761689272862723, guid: 908e9c747209f154abc6b0e98103493c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5919761689272862723, guid: 908e9c747209f154abc6b0e98103493c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5919761689272862723, guid: 908e9c747209f154abc6b0e98103493c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5919761689272862723, guid: 908e9c747209f154abc6b0e98103493c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6850,13 +6819,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1010488185}
-  - {fileID: 207141183}
-  - {fileID: 98534093}
-  - {fileID: 1229140180}
-  - {fileID: 2097039795}
-  - {fileID: 214851498}
-  - {fileID: 1695206122}
+  - {fileID: 1477799419}
+  - {fileID: 1471644197}
   m_Father: {fileID: 998592561}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1933979367
@@ -7026,7 +6990,7 @@ Transform:
   m_LocalScale: {x: 0.75, y: 0.2, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 697085316}
+  m_Father: {fileID: 189029459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1967375841
 MonoBehaviour:
@@ -7044,7 +7008,7 @@ MonoBehaviour:
   speed: 0.1
   wagenDim1: {fileID: 998592560}
   wagenDim2: {fileID: 1981910196}
-  lightRiddleControllerObjDim1: {fileID: 1154027635}
+  lightRiddleControllerObjDim1: {fileID: 0}
   lightRiddleControllerObjDim2: {fileID: 736798818}
   nodeCanbeEmpty: 1
 --- !u!65 &1967375842
@@ -7147,13 +7111,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1438040263}
   - {fileID: 71019072}
+  - {fileID: 1679339603}
+  - {fileID: 878593139}
   - {fileID: 736798820}
   - {fileID: 1330802904}
   - {fileID: 625129104}
-  - {fileID: 1679339603}
-  - {fileID: 1438040263}
-  - {fileID: 878593139}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1990560433
@@ -7165,8 +7129,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1990560434}
+  - component: {fileID: 1990560435}
   m_Layer: 0
-  m_Name: Buttons
+  m_Name: LightRiddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7180,7 +7145,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1990560433}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7188,8 +7153,34 @@ Transform:
   - {fileID: 1117810223}
   - {fileID: 1852318633}
   - {fileID: 2033045252}
-  m_Father: {fileID: 1154027636}
+  m_Father: {fileID: 189029459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1990560435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990560433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c04a11920b502645a94a577406d2098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light1: {fileID: 1097263045}
+  light2: {fileID: 1909408522}
+  light3: {fileID: 1586847251}
+  light4: {fileID: 1238881789}
+  button1: {fileID: 1117810222}
+  button2: {fileID: 1852318632}
+  button3: {fileID: 2033045251}
+  disableBtn1: 0
+  disableBtn2: 1
+  disableBtn3: 0
+  light1Active: 0
+  light2Active: 0
+  light3Active: 1
+  light4Active: 0
 --- !u!1 &2013866778
 GameObject:
   m_ObjectHideFlags: 0
@@ -7223,7 +7214,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.15, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1353138964}
+  m_Father: {fileID: 189029459}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2013866780
 BoxCollider:
@@ -7430,7 +7421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dd5cb56d7301a49998267615681f75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightRiddleControllerObj: {fileID: 1154027635}
   direction: {x: 0, y: -1, z: 0}
   speed: 0.5
 --- !u!1 &2033433192
@@ -7664,12 +7654,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097039794}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.93, y: 1.65, z: 12.72}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.9300003, y: 1.6500001, z: 12.72}
   m_LocalScale: {x: 4.2, y: 2.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1933351867}
+  m_Father: {fileID: 1477799419}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2097039796
 BoxCollider:
@@ -7770,11 +7760,11 @@ Transform:
   m_GameObject: {fileID: 2122059687}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.57, y: 1.658, z: 12.72}
+  m_LocalPosition: {x: -0.5699997, y: 1.658, z: 12.72}
   m_LocalScale: {x: 1.2, y: 2.3, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1921382086}
+  m_Father: {fileID: 1741302335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2122059689
 BoxCollider:
