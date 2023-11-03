@@ -10,6 +10,7 @@ public class PlayerTeleport : MonoBehaviour
 
     private GameObject pickedItem;
     private IInteractable interactableObj;
+    [SerializeField] private GameObject teleportDisplayObj;
 
 
     PlayerController controller;
@@ -34,25 +35,34 @@ public class PlayerTeleport : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T) && controller.disabled == false)
         {
-            
-
-            
-            float playerHeight = gameObject.GetComponent<CharacterController>().height;
-            if (currentTrain == Trains.Train1)
+            if (!teleportDisplayObj.GetComponent<TeleportDisplay>().isOnCooldonw())
             {
-                Vector3 shift = transform.position - Train1.transform.position;
-                destination = Train2.transform.position + shift;
-                currentTrain = Trains.Train2;
-                Debug.Log("Teleported to Train 2");
+                float playerHeight = gameObject.GetComponent<CharacterController>().height;
+                if (currentTrain == Trains.Train1)
+                {
+                    Vector3 shift = transform.position - Train1.transform.position;
+                    destination = Train2.transform.position + shift;
+                    currentTrain = Trains.Train2;
+                    Debug.Log("Teleported to Train 2. Vector3: " + shift);
+                }
+                else
+                {
+                    Vector3 shift = transform.position - Train2.transform.position;
+                    destination = Train1.transform.position + shift;
+                    currentTrain = Trains.Train1;
+                    Debug.Log("Teleported to Train 1 Vector3: " + shift);
+                }
+
+                StartCoroutine(Teleport(destination));
+                
+                
             }
             else
             {
-                Vector3 shift = transform.position - Train2.transform.position;
-                destination = Train1.transform.position + shift ;
-                currentTrain = Trains.Train1;
-                Debug.Log("Teleported to Train 1");
+                Debug.Log("Teleport on cooldown");
             }
-            StartCoroutine(Teleport(destination));
+
+
         }
     }
     IEnumerator Teleport(Vector3 destination)
@@ -65,9 +75,9 @@ public class PlayerTeleport : MonoBehaviour
         {
             interact.getObject().transform.position = GameObject.Find("PickUpPoint").transform.position;
         }
+        teleportDisplayObj.GetComponent<TeleportDisplay>().startCooldown();
         yield return new WaitForSeconds(.1f);
         controller.disabled = false;
-        
 
     }
 }
