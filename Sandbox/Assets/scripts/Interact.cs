@@ -53,7 +53,22 @@ public class Interact : MonoBehaviour
             {
                 Debug.Log("Hit something");
                 Debug.Log(HitInfo.collider.gameObject.name);
-                if(HitInfo.collider.gameObject.TryGetComponent(out IInteractable interactObj))
+                bool hasInteractable;
+                if (HitInfo.collider.gameObject.CompareTag("movableChild"))
+                {
+                    hasInteractable = HitInfo.collider.gameObject.transform.parent.gameObject.TryGetComponent(out interactObj);
+                    Debug.Log("Hit movable");
+                    hitObject = HitInfo.collider.gameObject;
+
+                    pickedUp = !pickedUp;
+                    interactObj.Interact();
+                }
+                else
+                {
+                     hasInteractable = HitInfo.collider.gameObject.TryGetComponent(out interactObj);
+                }
+
+                if(hasInteractable)
                 {
                     if (HitInfo.collider.gameObject.CompareTag("doorBtn"))
                     {
@@ -65,7 +80,7 @@ public class Interact : MonoBehaviour
                     {
                         Debug.Log("Hit movable");
                         hitObject = HitInfo.collider.gameObject;
-                        this.interactObj = interactObj;
+
                         pickedUp = !pickedUp;
                         interactObj.Interact();
                     }

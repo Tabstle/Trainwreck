@@ -8,6 +8,7 @@ TagManager:
   - movable
   - doorBtn
   - lightBtn
+  - moveableChild
   layers:
   - Default
   - TransparentFX
