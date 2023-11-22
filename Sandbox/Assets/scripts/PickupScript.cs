@@ -56,7 +56,8 @@ public class PickupScript : MonoBehaviour, IInteractable
         Rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         if (!pickedUp) //Put Down
         {
-            
+
+
             if (radarObject.GetComponent<gravNodeScript>().hasValidGravNode())
             {
                 //We have to check if the Moveable would be in the way of another the gravNode witch is occupied
@@ -93,6 +94,8 @@ public class PickupScript : MonoBehaviour, IInteractable
         }
         else //Pick up
         {
+
+
             if (radarObject.GetComponent<gravNodeScript>().hasValidGravNode())
             {
                 radarObject.GetComponent<gravNodeScript>().releaseGravNodeHost();
