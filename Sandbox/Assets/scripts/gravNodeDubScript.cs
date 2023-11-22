@@ -31,6 +31,9 @@ public class gravNodeDubScript : MonoBehaviour
             dublicate.transform.localScale = meshObject.transform.localScale;
             dublicate.transform.position = transform.position + objectHeight;
 
+Debug.Log("dup "+ dublicate.transform.position);
+Debug.Log("position node" + transform.position );
+Debug.Log("hight node"  + objectHeight);
 
             MeshFilter newMeshFilter = dublicate.AddComponent<MeshFilter>();
             newMeshFilter.sharedMesh = meshFilter.sharedMesh;
