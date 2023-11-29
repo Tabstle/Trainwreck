@@ -17,11 +17,12 @@ public class Interact : MonoBehaviour
     private bool pickedUp = false;
     private IInteractable interactObj;
     private GameObject hitObject;
+    private GameObject radar;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        radar = GameObject.Find("PickUpPoint").transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -32,7 +33,7 @@ public class Interact : MonoBehaviour
             
             if (pickedUp)
             {
-                if (hitObject.transform.GetChild(0).GetComponent<gravNodeScript>().checkColliders())
+                if (radar.GetComponent<gravNodeV2Script>().checkColliders())
                 {
                     interactObj.Interact();
                     pickedUp = !pickedUp;

@@ -1,20 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using TreeEditor;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class PickupV2Script : MonoBehaviour , IInteractable
 {
     private bool pickedUp = false;
-    private bool moveToClipNode = false;
 
-    private GameObject clipToObject;
+    private GameObject arm;
     private GameObject itemPos;
     private Rigidbody rb;
     private Vector3 objectHeight; 
     
     private GameObject radarObject;
-    private GameObject player;
+    private GameObject cam;
+
+    private GameObject gravNode = null;
+
+    private float handLaenge = 1.5f;
 
     public enum Tag
     {
@@ -51,11 +55,10 @@ public class PickupV2Script : MonoBehaviour , IInteractable
     void Start()
     {
         itemPos = GameObject.Find("ItemPos");
-        player = GameObject.Find("Player");
-        clipToObject = GameObject.Find("PickUpPoint");
+        cam = GameObject.Find("Main Camera");
         rb = GetComponent<Rigidbody>();
         objectHeight = new Vector3(0, transform.lossyScale.y * 0.5f, 0);
-        radarObject = transform.GetChild(0).gameObject;
+        radarObject = GameObject.Find("PickUpPoint").transform.GetChild(0).gameObject;
 
     }
 
@@ -71,15 +74,67 @@ public class PickupV2Script : MonoBehaviour , IInteractable
 
         if (!pickedUp) //Put Down
         {
-            transform.position = clipToObject.transform.position;
-            rb.useGravity = true;
-            rb.velocity = Vector3.zero;
+
+
+            if(radarObject.GetComponent<gravNodeV2Script>().hasValidGravNode())
+            {
+                if (radarObject.GetComponent<gravNodeV2Script>().checkColliders())
+                {
+                   
+                    gravNode = radarObject.GetComponent<gravNodeV2Script>().getClosestGravNode();
+                    gravNode.GetComponent<DublicateV2Script>().setOccupied(true, gameObject);
+
+                }else
+                {
+                    //Shake Object
+                }   
+            }
+            else
+            {
+                Debug.LogWarning("No valid GravNode");
+                int layerMask = ~LayerMask.GetMask("Player");
+
+                Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1.5f, layerMask);
+                Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red, 1f);
+                Debug.Log("HIT POINT: " + hit.point);
+                if (hit.collider != null)
+                {
+                    transform.position = hit.point;
+                }
+                else
+                {
+                    Debug.Log("No hit");
+                    transform.position = cam.transform.position + cam.transform.forward * handLaenge;
+                }
+
+                rb.useGravity = true;
+                rb.velocity = Vector3.zero;
+            }   
+
         }
         else //Pick Up
         {
+            //Logic pickup
+            if(gravNode != null)
+            {
+                //release GravNodeHost
+                gravNode.GetComponent<DublicateV2Script>().setOccupied(false, null);
+                //init GravNodeList
+                gravNode.GetComponent<gravNodeV2Script>().initGravNodeList();
+            }
+
+            // Visual pickup
             rb.useGravity = false;
+            rb.velocity = Vector3.zero;
             transform.position = itemPos.transform.position;
+
         }
     }
 
+    public bool getPickedup()
+    {
+        return pickedUp ? true : false;
+    }
 }
+
+
