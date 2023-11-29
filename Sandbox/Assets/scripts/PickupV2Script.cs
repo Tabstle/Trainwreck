@@ -60,6 +60,7 @@ public class PickupV2Script : MonoBehaviour , IInteractable
         objectHeight = new Vector3(0, transform.lossyScale.y * 0.5f, 0);
         radarObject = GameObject.Find("PickUpPoint").transform.GetChild(0).gameObject;
 
+
     }
 
     // Update is called once per frame
@@ -82,7 +83,7 @@ public class PickupV2Script : MonoBehaviour , IInteractable
                 {
                    
                     gravNode = radarObject.GetComponent<gravNodeV2Script>().getClosestGravNode();
-                    gravNode.GetComponent<DublicateV2Script>().setOccupied(true, gameObject);
+                    gravNode.GetComponent<DublicateV2Script>().setOccupied(true, this.gameObject);
 
                 }else
                 {
@@ -110,18 +111,22 @@ public class PickupV2Script : MonoBehaviour , IInteractable
                 rb.useGravity = true;
                 rb.velocity = Vector3.zero;
             }   
-
+            radarObject.GetComponent<gravNodeV2Script>().setItem(null);
         }
         else //Pick Up
         {
+            radarObject.GetComponent<gravNodeV2Script>().setItem(this.gameObject);
             //Logic pickup
             if(gravNode != null)
             {
                 //release GravNodeHost
                 gravNode.GetComponent<DublicateV2Script>().setOccupied(false, null);
+                gravNode = null;
                 //init GravNodeList
-                gravNode.GetComponent<gravNodeV2Script>().initGravNodeList();
+                radarObject.GetComponent<gravNodeV2Script>().initGravNodeList();
             }
+
+
 
             // Visual pickup
             rb.useGravity = false;

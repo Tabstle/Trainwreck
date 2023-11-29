@@ -15,15 +15,18 @@ public class gravNodeV2Script : MonoBehaviour
 
     public void Start()
     {
+        Debug.Log("Grav Node Start");
+
         radar = GameObject.Find("PickUpPoint").transform.GetChild(0).gameObject;
     }
 
 
     private void OnTriggerEnter(Collider colliding)
     {
-        Debug.Log("Trigger Enter");
-        if (colliding.gameObject.CompareTag("clipPoint") && movableObj.GetComponent<PickupV2Script>().getPickedup() && !colliding.gameObject.GetComponent<DublicateV2Script>().getOccupied())
+        Debug.Log("Trigger Enter: " + colliding.name);
+        if (colliding.gameObject.CompareTag("clipPoint") && movableObj != null && !colliding.gameObject.GetComponent<DublicateV2Script>().getOccupied())
         {
+            Debug.Log("Trigger Enter clipPoint");
             if (!gravNodeList.Contains(colliding.gameObject))
             {
                 allgravNodelist.Add(colliding.gameObject);
@@ -39,6 +42,8 @@ public class gravNodeV2Script : MonoBehaviour
         {
             if (gravNodeList.Contains(colliding.gameObject))
             {
+                Debug.Log("Trigger Exit clipPoint");
+
                 allgravNodelist.Remove(colliding.gameObject);
                 gravNodeList.Remove(colliding.gameObject);
                 colliding.gameObject.GetComponent<DublicateV2Script>().destroyDublicate();
@@ -73,6 +78,11 @@ public class gravNodeV2Script : MonoBehaviour
             }
         }
        
+    }
+
+    public   void setItem(GameObject item)
+    {
+        movableObj = item;
     }
 
     public GameObject getClosestGravNode()

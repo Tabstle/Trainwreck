@@ -13,7 +13,7 @@ public class Interact : MonoBehaviour
 {
     [SerializeField] private LayerMask InteractMask;
     [SerializeField] private Camera PlayerCamera;
-    [SerializeField] float InteractionDistance = 2f;
+    [SerializeField] float InteractionDistance = 1.5f;
     private bool pickedUp = false;
     private IInteractable interactObj;
     private GameObject hitObject;
@@ -49,7 +49,7 @@ public class Interact : MonoBehaviour
                 
             }
             Ray camRay = PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            Debug.DrawRay(camRay.origin, camRay.direction * InteractionDistance, Color.red, 1f);
+            Debug.DrawRay(camRay.origin, camRay.direction * InteractionDistance, Color.red);
             if (Physics.Raycast(camRay, out RaycastHit HitInfo, InteractionDistance, InteractMask))
             {
                 Debug.Log("Hit something");

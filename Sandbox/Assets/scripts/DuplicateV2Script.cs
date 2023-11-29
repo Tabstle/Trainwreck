@@ -114,10 +114,13 @@ public class DublicateV2Script : MonoBehaviour
             meshObject.GetComponent<Rigidbody>().useGravity = false;
             meshObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             meshObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            Destroy(dublicate);
         }
         else
         {
-            meshObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            Debug.LogWarning("Meshobject: "+ meshObject);
+            Rigidbody rb = this.meshObject.GetComponent<Rigidbody>();
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
             this.meshObject = null;
         }
     }
@@ -144,6 +147,7 @@ public class DublicateV2Script : MonoBehaviour
     }
     public void destroyDublicate()
     {
+        Debug.LogWarning("Destroy Dublicate");
         meshObject = null;
         Destroy(dublicate);
     }
