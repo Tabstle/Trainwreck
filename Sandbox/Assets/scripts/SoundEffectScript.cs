@@ -15,6 +15,14 @@ public class SoundEffect : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float dimension2Volume = 1.0f;
 
+    //Field for TP Sound Effect
+    [Header("Rewind")]
+    public AudioClip rewindSound;
+    public void PlayRewindSound()
+    {
+        audioSource.PlayOneShot(rewindSound);
+    }
+
     //Field for Footsteps
     [Header("Footsteps")]
     public List<AudioClip> StepsL;

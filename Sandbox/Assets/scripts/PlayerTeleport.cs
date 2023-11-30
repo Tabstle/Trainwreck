@@ -35,7 +35,7 @@ public class PlayerTeleport : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T) && controller.disabled == false)
         {
             
-
+            GetComponent<SoundEffect>().PlayRewindSound();
             
             float playerHeight = gameObject.GetComponent<CharacterController>().height;
             if (currentTrain == Trains.Train1)
