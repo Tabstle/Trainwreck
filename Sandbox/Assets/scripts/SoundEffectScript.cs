@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class SoundEffect : MonoBehaviour
 {
+    //Field for Music
+    [Header("Background Music")]
+    public AudioClip dimension1Music;
+    public AudioClip dimension2Music;
+
+    [Header("Music Volume")]
+    [Range(0.0f, 1.0f)]
+    public float dimension1Volume = 1.0f;
+    [Range(0.0f, 1.0f)]
+    public float dimension2Volume = 1.0f;
+
     //Field for Footsteps
     [Header("Footsteps")]
     public List<AudioClip> StepsL;
@@ -29,20 +40,37 @@ public class SoundEffect : MonoBehaviour
     // Field for Place Meat
     [Header("PlaceMeat")]
     public List<AudioClip> meatPlace;
-    
 
+    private AudioSource backgroundMusicSource;
     private AudioSource audioSource;
+
     private bool isWalking;
+    private bool isInDimension1 = true;
 
+    private Dictionary<AudioClip, float> musicPlaybackPositions = new Dictionary<AudioClip, float>();
 
-    // Start is called before the first frame update
-   void Start()
+    void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        backgroundMusicSource = gameObject.AddComponent<AudioSource>();
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+        SwitchDimension(isInDimension1); // Start with the default dimension music
+
+        // Set up background music loop
+        backgroundMusicSource.loop = true;
+        backgroundMusicSource.clip = dimension1Music;
+        backgroundMusicSource.volume = dimension1Volume;
+        backgroundMusicSource.Play();
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            isInDimension1 = !isInDimension1;
+            SwitchDimension(isInDimension1);
+        }
+
         // Check for key presses to simulate walking
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) ||
             Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
@@ -55,17 +83,71 @@ public class SoundEffect : MonoBehaviour
         }
     }
 
+    void SwitchDimension(bool dimension)
+    {
+        AudioClip currentMusic = backgroundMusicSource.clip;
+        float playbackPosition = backgroundMusicSource.time;
+
+        if (currentMusic != null)
+        {
+            if (!musicPlaybackPositions.ContainsKey(currentMusic))
+            {
+                musicPlaybackPositions.Add(currentMusic, playbackPosition);
+            }
+            else
+            {
+                musicPlaybackPositions[currentMusic] = playbackPosition;
+            }
+        }
+
+        if (dimension)
+        {
+            backgroundMusicSource.volume = dimension1Volume;
+            if (musicPlaybackPositions.ContainsKey(dimension1Music))
+            {
+                backgroundMusicSource.Stop(); // Stop previous dimension music
+                backgroundMusicSource.clip = dimension1Music;
+                backgroundMusicSource.time = musicPlaybackPositions[dimension1Music];
+                backgroundMusicSource.Play();
+            }
+            else
+            {
+                PlayNewDimensionMusic(dimension1Music);
+            }
+        }
+        else
+        {
+            backgroundMusicSource.volume = dimension2Volume;
+            if (musicPlaybackPositions.ContainsKey(dimension2Music))
+            {
+                backgroundMusicSource.Stop(); // Stop previous dimension music
+                backgroundMusicSource.clip = dimension2Music;
+                backgroundMusicSource.time = musicPlaybackPositions[dimension2Music];
+                backgroundMusicSource.Play();
+            }
+            else
+            {
+                PlayNewDimensionMusic(dimension2Music);
+            }
+        }
+    }
+    void PlayNewDimensionMusic(AudioClip musicClip)
+    {
+        backgroundMusicSource.Stop(); // Stop previous dimension music
+        backgroundMusicSource.clip = musicClip;
+        backgroundMusicSource.Play();
+    }
+
+
     IEnumerator PlayFootsteps()
     {
         while (isWalking)
         {
-            // Play a random sound from StepsL list
             audioSource.clip = StepsL[Random.Range(0, StepsL.Count)];
             audioSource.Play();
 
             yield return new WaitForSeconds(0.5f);
 
-            // Play a random sound from StepsR list
             audioSource.clip = StepsR[Random.Range(0, StepsR.Count)];
             audioSource.Play();
 
@@ -73,7 +155,6 @@ public class SoundEffect : MonoBehaviour
         }
     }
 
-    // Stop walking sound when keys are released
     void LateUpdate()
     {
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) ||
