@@ -141,26 +141,27 @@ public class SoundEffect : MonoBehaviour
 
     IEnumerator PlayFootsteps()
     {
+        isWalking = true;
+
         while (isWalking)
         {
-            audioSource.clip = StepsL[Random.Range(0, StepsL.Count)];
-            audioSource.Play();
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
+                Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+            {
+                audioSource.clip = StepsL[Random.Range(0, StepsL.Count)];
+                audioSource.Play();
 
-            yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.5f);
 
-            audioSource.clip = StepsR[Random.Range(0, StepsR.Count)];
-            audioSource.Play();
+                audioSource.clip = StepsR[Random.Range(0, StepsR.Count)];
+                audioSource.Play();
 
-            yield return new WaitForSeconds(0.5f);
-        }
-    }
-
-    void LateUpdate()
-    {
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) ||
-            Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
-        {
-            isWalking = false;
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                isWalking = false;
+            }
         }
     }
 }
