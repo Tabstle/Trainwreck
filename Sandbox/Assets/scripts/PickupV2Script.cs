@@ -93,20 +93,24 @@ public class PickupV2Script : MonoBehaviour , IInteractable
             else
             {
                 Debug.LogWarning("No valid GravNode");
-                int layerMask = ~LayerMask.GetMask("Player");
+                
+                //Debug.Log("HIT POINT: " + hit.point);
 
-                Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1.5f, layerMask);
-                Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red, 1f);
-                Debug.Log("HIT POINT: " + hit.point);
-                if (hit.collider != null)
-                {
-                    transform.position = hit.point;
-                }
-                else
-                {
-                    Debug.Log("No hit");
-                    transform.position = cam.transform.position + cam.transform.forward * handLaenge;
-                }
+                //DOESNT WORK I DONT KNOW WHY
+                //if (Physics.Raycast(cam.transform.position + cam.transform.forward.normalized * .5f, cam.transform.forward.normalized, out RaycastHit hit, 1.5f))
+                //{
+                //    Debug.Log("Hit");
+                //    GameObject debug = new GameObject("debug: ");
+                //    debug.transform.position = hit.point;
+                //    transform.position = hit.point;
+                //}
+                //else
+                //{
+                //    Debug.Log("No hit");
+                //    transform.position = cam.transform.position + cam.transform.forward * handLaenge;
+                //}
+                transform.position = cam.transform.position + cam.transform.forward * handLaenge;
+
 
                 rb.useGravity = true;
                 rb.velocity = Vector3.zero;
@@ -120,18 +124,19 @@ public class PickupV2Script : MonoBehaviour , IInteractable
             if(gravNode != null)
             {
                 //release GravNodeHost
-                gravNode.GetComponent<DublicateV2Script>().setOccupied(false, null);
+                gravNode.GetComponent<DublicateV2Script>().setOccupied(false, this.gameObject);
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
                 gravNode = null;
                 //init GravNodeList
                 radarObject.GetComponent<gravNodeV2Script>().initGravNodeList();
             }
-
-
-
             // Visual pickup
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
             transform.position = itemPos.transform.position;
+
+
+
 
         }
     }

@@ -25,13 +25,13 @@ public class DublicateV2Script : MonoBehaviour
     
             //Visual für initGravNode
             objectHeight = getHeight(meshObject);
-            meshObject.transform.position = transform.position + objectHeight;
+            meshObject.transform.position = transform.position + objectHeight/2;
         }
 
         
     }
 
-    private Vector3 getHeight (GameObject meshObject)
+    public static Vector3 getHeight (GameObject meshObject)
     {
         try
         {
@@ -58,7 +58,7 @@ public class DublicateV2Script : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError("MeshFilter not found");
+            Debug.LogError("MeshFilter not found: "+e);
         }
         
 
@@ -81,7 +81,7 @@ public class DublicateV2Script : MonoBehaviour
             dublicate = new GameObject("Silhouette of: " + meshObject.name);
             // Setts Scale and Postion of the dublicate
             dublicate.transform.localScale = meshObject.transform.localScale;
-            dublicate.transform.position = transform.position + objectHeight;
+            dublicate.transform.position = transform.position + objectHeight/3;
 
 
             MeshFilter newMeshFilter = dublicate.AddComponent<MeshFilter>();
@@ -105,22 +105,21 @@ public class DublicateV2Script : MonoBehaviour
     public void setOccupied(bool isOccupied, GameObject meshObject)
     {
         this.isOccupied = isOccupied;
+        this.meshObject = meshObject;
         if (isOccupied)
         {
             this.meshObject = meshObject;
 
             //Visual für setOccupied
-            meshObject.transform.position = transform.position + objectHeight;
+            meshObject.transform.position = transform.position + objectHeight/3;
             meshObject.GetComponent<Rigidbody>().useGravity = false;
             meshObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             meshObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             Destroy(dublicate);
         }
-        else
-        {
-            Debug.LogWarning("Meshobject: "+ meshObject);
-            Rigidbody rb = this.meshObject.GetComponent<Rigidbody>();
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        else {
+        
+            
             this.meshObject = null;
         }
     }
