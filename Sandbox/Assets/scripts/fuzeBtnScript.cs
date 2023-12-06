@@ -152,35 +152,35 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
                 return false;
             }
 
-            // Check if Object on GravNode is equal to the object at the other Position
-            if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() == null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() == null)
-            {
-                acceptable = nodeCanbeEmpty;
-                continue;
-            }
-            else if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() == null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() != null)
-            {
-                wrongObjectCounter++;
-                continue;
-            }
-            else if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() != null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() == null)
-            {
-                wrongObjectCounter++;
-                continue;
-            }// Equals cant work like this have to change it
-            else
-            {
-                if (GravNodeDim1.GetComponent<gravNodeDubScript>().checkEquals(GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj()))
-                {
-                    objectCounter++;
-                    objectCounter++;
-                }
-                else
-                {
-                    wrongObjectCounter++;
-                    wrongObjectCounter++;
-                }
-            }
+            //// Check if Object on GravNode is equal to the object at the other Position
+            //if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() == null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() == null)
+            //{
+            //    acceptable = nodeCanbeEmpty;
+            //    continue;
+            //}
+            //else if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() == null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() != null)
+            //{
+            //    wrongObjectCounter++;
+            //    continue;
+            //}
+            //else if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() != null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() == null)
+            //{
+            //    wrongObjectCounter++;
+            //    continue;
+            //}// Equals cant work like this have to change it
+            //else
+            //{
+            //    if (GravNodeDim1.GetComponent<gravNodeDubScript>().checkEquals(GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj()))
+            //    {
+            //        objectCounter++;
+            //        objectCounter++;
+            //    }
+            //    else
+            //    {
+            //        wrongObjectCounter++;
+            //        wrongObjectCounter++;
+            //    }
+            //}
             
         
         }
