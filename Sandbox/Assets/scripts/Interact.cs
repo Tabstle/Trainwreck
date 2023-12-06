@@ -13,15 +13,16 @@ public class Interact : MonoBehaviour
 {
     [SerializeField] private LayerMask InteractMask;
     [SerializeField] private Camera PlayerCamera;
-    [SerializeField] float InteractionDistance = 2f;
+    [SerializeField] float InteractionDistance = 1.5f;
     private bool pickedUp = false;
     private IInteractable interactObj;
     private GameObject hitObject;
+    private GameObject radar;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        radar = GameObject.Find("PickUpPoint").transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -32,7 +33,7 @@ public class Interact : MonoBehaviour
             
             if (pickedUp)
             {
-                if (hitObject.transform.GetChild(0).GetComponent<gravNodeScript>().checkColliders())
+                if (radar.GetComponent<gravNodeV2Script>().checkColliders())
                 {
                     interactObj.Interact();
                     pickedUp = !pickedUp;
@@ -48,27 +49,14 @@ public class Interact : MonoBehaviour
                 
             }
             Ray camRay = PlayerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            Debug.DrawRay(camRay.origin, camRay.direction * InteractionDistance, Color.red, 1f);
+            Debug.DrawRay(camRay.origin, camRay.direction * InteractionDistance, Color.red);
             if (Physics.Raycast(camRay, out RaycastHit HitInfo, InteractionDistance, InteractMask))
             {
                 Debug.Log("Hit something");
                 Debug.Log(HitInfo.collider.gameObject.name);
-                bool hasInteractable;
-                if (HitInfo.collider.gameObject.CompareTag("movableChild"))
-                {
-                    hasInteractable = HitInfo.collider.gameObject.transform.parent.gameObject.TryGetComponent(out interactObj);
-                    Debug.Log("Hit movable");
-                    hitObject = HitInfo.collider.gameObject;
+                
 
-                    pickedUp = !pickedUp;
-                    interactObj.Interact();
-                }
-                else
-                {
-                     hasInteractable = HitInfo.collider.gameObject.TryGetComponent(out interactObj);
-                }
-
-                if(hasInteractable)
+                if(HitInfo.collider.gameObject.TryGetComponent(out interactObj))
                 {
                     if (HitInfo.collider.gameObject.CompareTag("doorBtn"))
                     {
@@ -80,10 +68,17 @@ public class Interact : MonoBehaviour
                     {
                         Debug.Log("Hit movable");
                         hitObject = HitInfo.collider.gameObject;
-
                         pickedUp = !pickedUp;
                         interactObj.Interact();
                     }
+                    else if (HitInfo.collider.gameObject.CompareTag("movableV2"))
+                    {
+                        Debug.Log("Hit movable");
+                        hitObject = HitInfo.collider.gameObject;
+                        pickedUp = !pickedUp;
+                        interactObj.Interact();
+                    }
+
                     else if (HitInfo.collider.gameObject.CompareTag("lightBtn"))
                     {
                         interactObj.Interact();
