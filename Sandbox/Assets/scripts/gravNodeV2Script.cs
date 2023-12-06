@@ -60,9 +60,11 @@ public class gravNodeV2Script : MonoBehaviour
         {
             if (movableObj.GetComponent<PickupV2Script>().getPickedup())
             {
+ 
                 if (gravNodeList.Count > 0)
                 {
                     GameObject closestNode = getClosestGravNode();
+                    Debug.Log("Closest Node: " + closestNode.name);
                     foreach (GameObject node in gravNodeList)
                     {
                         if (node == closestNode)
@@ -94,14 +96,14 @@ public class gravNodeV2Script : MonoBehaviour
             if (closestNode == null)
             {
                 closestNode = graveNode;
-                closestDis = Vector3.Distance(movableObj.transform.position, graveNode.transform.position);
+                closestDis = Vector3.Distance(radar.transform.position, graveNode.transform.position);
             }
             else
             {
-                if (Vector3.Distance(movableObj.transform.position, graveNode.transform.position) < closestDis)
+                if (Vector3.Distance(radar.transform.position, graveNode.transform.position) < closestDis)
                 {
                     closestNode = graveNode;
-                    closestDis = Vector3.Distance(movableObj.transform.position, graveNode.transform.position);
+                    closestDis = Vector3.Distance(radar.transform.position, graveNode.transform.position);
                 }
             }
         }
@@ -130,6 +132,15 @@ public class gravNodeV2Script : MonoBehaviour
             gravNodeList.Add(collider.gameObject);
             collider.gameObject.GetComponent<DublicateV2Script>().createDublicate(movableObj);
 
+        }
+    }
+
+    public void destroyAllDublicates()
+    {
+        Debug.Log("Destroy gravNodeList");
+        foreach (GameObject node in gravNodeList)
+        {
+            node.GetComponent<DublicateV2Script>().destroyDublicate();
         }
     }
 
