@@ -111,15 +111,14 @@ public class DublicateV2Script : MonoBehaviour
             this.meshObject = meshObject;
 
             //Visual für setOccupied
-            meshObject.transform.position = transform.position + objectHeight/3;
+            
             meshObject.GetComponent<Rigidbody>().useGravity = false;
             meshObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            meshObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            //meshObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            meshObject.transform.position = transform.position + objectHeight / 3;
             Destroy(dublicate);
         }
         else {
-        
-            
             this.meshObject = null;
         }
     }

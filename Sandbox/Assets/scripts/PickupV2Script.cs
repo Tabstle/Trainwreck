@@ -63,16 +63,11 @@ public class PickupV2Script : MonoBehaviour , IInteractable
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Interact()
     {
         pickedUp = !pickedUp;
 
+    Debug.Log("Pickup - PUTDOWN: " + pickedUp);
         if (!pickedUp) //Put Down
         {
 
@@ -89,6 +84,7 @@ public class PickupV2Script : MonoBehaviour , IInteractable
                 }
                 else
                 {
+                    Debug.LogError("Colliders not valid");
                     //Shake Object
                 }   
             }
@@ -96,13 +92,9 @@ public class PickupV2Script : MonoBehaviour , IInteractable
             {
                 Debug.LogWarning("No valid GravNode");
 
-                //Debug.Log("HIT POINT: " + hit.point);
-
-                //DOESNT WORK I DONT KNOW WHY
-                Debug.DrawRay(cam.transform.position, cam.transform.forward, Color.red, 50);
                 RaycastHit[] hitarray = Physics.RaycastAll(cam.transform.position, cam.transform.forward.normalized, handLaenge*3);
 
-                Debug.Log(hitarray.Length);
+                Debug.Log("arrayL:"+hitarray.Length);
 
 
                 List<RaycastHit> hitsList = new List<RaycastHit>();
@@ -116,9 +108,11 @@ public class PickupV2Script : MonoBehaviour , IInteractable
                         hitsList.Add(hit);
                     }
                 }
+                Debug.Log("List Count:" + hitsList.Count);
                 //Get closest hit
                 if (hitsList.Count == 0)
                 {
+                    Debug.Log("PutDown - Outof reach");
                     transform.position = radarObject.transform.position;
                 }
                 else
@@ -134,10 +128,12 @@ public class PickupV2Script : MonoBehaviour , IInteractable
 
                     if (closestHit.distance > handLaenge)
                     {
+                        Debug.Log("PutDown - Outof reach but in range Of ray");
                         transform.position = radarObject.transform.position;
                     }
                     else
                     {
+                        Debug.Log("PutDown - Closest Hit: " + closestHit.collider.gameObject.name);
                         transform.position = closestHit.point + objectHeight / 3;
                     }
                 }
@@ -149,29 +145,32 @@ public class PickupV2Script : MonoBehaviour , IInteractable
             }   
             radarObject.GetComponent<gravNodeV2Script>().setItem(null);
         }
+
+
         else //Pick Up
         {
+            //If on GravNode
             radarObject.GetComponent<gravNodeV2Script>().setItem(this.gameObject);
-            //Logic pickup
-            if(gravNode != null)
-            {
-                //release GravNodeHost
-                gravNode.GetComponent<DublicateV2Script>().setOccupied(false, this.gameObject);
-                rb.constraints = RigidbodyConstraints.FreezeRotation;
-                gravNode = null;
-                
-                
-            }
-            //init GravNodeList
-            radarObject.GetComponent<gravNodeV2Script>().initGravNodeList();
-            // Visual pickup
+
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
-            transform.position = itemPos.transform.position;
+            Debug.Log("ITEMPOS: " + this.gameObject.transform.position);
+            this.gameObject.transform.position = itemPos.transform.position;
+            Debug.Log("ITEMPOS: " + this.gameObject.transform.position);
+            if (gravNode != null)
+            {
+                Debug.Log("Pickup - GravNode not Null: " + gravNode.name);
+                //release GravNodeHost
+                Debug.Log("Pickup - Release GravNodeHost");
+                gravNode.GetComponent<DublicateV2Script>().setOccupied(false, this.gameObject);
 
+                gravNode = null;
+            }   
 
-
-
+            Debug.Log("Pickup - Init GravNodeList");
+            //init GravNodeList
+            radarObject.GetComponent<gravNodeV2Script>().initGravNodeList();
+            Debug.Log("ITEMPOS: " + this.gameObject.transform.position);
         }
     }
 

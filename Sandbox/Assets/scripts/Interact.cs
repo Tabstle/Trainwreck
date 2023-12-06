@@ -52,9 +52,7 @@ public class Interact : MonoBehaviour
             Debug.DrawRay(camRay.origin, camRay.direction * InteractionDistance, Color.red);
             if (Physics.Raycast(camRay, out RaycastHit HitInfo, InteractionDistance, InteractMask))
             {
-                Debug.Log("Hit something");
-                Debug.Log(HitInfo.collider.gameObject.name);
-                
+                Debug.Log("Interact - Hit: "+ HitInfo.collider.gameObject.name);                
 
                 if(HitInfo.collider.gameObject.TryGetComponent(out interactObj))
                 {
@@ -66,7 +64,7 @@ public class Interact : MonoBehaviour
                     }
                     else if (HitInfo.collider.gameObject.CompareTag("movable"))
                     {
-                        Debug.Log("Hit movable");
+                        //Debug.Log("Hit movable");
                         hitObject = HitInfo.collider.gameObject;
                         pickedUp = !pickedUp;
                         interactObj.Interact();

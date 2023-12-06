@@ -23,10 +23,10 @@ public class gravNodeV2Script : MonoBehaviour
 
     private void OnTriggerEnter(Collider colliding)
     {
-        Debug.Log("Trigger Enter: " + colliding.name);
+        //Debug.Log("Trigger Enter: " + colliding.name);
         if (colliding.gameObject.CompareTag("clipPoint") && movableObj != null && !colliding.gameObject.GetComponent<DublicateV2Script>().getOccupied())
         {
-            Debug.Log("Trigger Enter clipPoint");
+            //Debug.Log("Trigger Enter clipPoint");
             if (!gravNodeList.Contains(colliding.gameObject))
             {
                 allgravNodelist.Add(colliding.gameObject);
@@ -42,7 +42,7 @@ public class gravNodeV2Script : MonoBehaviour
         {
             if (gravNodeList.Contains(colliding.gameObject))
             {
-                Debug.Log("Trigger Exit clipPoint");
+                //Debug.Log("Trigger Exit clipPoint");
 
                 allgravNodelist.Remove(colliding.gameObject);
                 gravNodeList.Remove(colliding.gameObject);
