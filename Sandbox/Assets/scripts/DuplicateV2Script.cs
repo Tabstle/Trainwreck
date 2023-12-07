@@ -8,6 +8,8 @@ public class DublicateV2Script : MonoBehaviour
 
     [SerializeField] private GameObject initGravNode; // if u wanna have an object directli on an gravNode u  have to reference it here;
 
+    private bool tpToGravNode = false;
+
     private bool isOccupied = false;
     private GameObject meshObject = null;
     private GameObject dublicate = null;
@@ -20,15 +22,23 @@ public class DublicateV2Script : MonoBehaviour
 
         if (initGravNode != null)
         {
+            Debug.LogWarning("Init GravNode");
             //Logik für initGravNode
             meshObject = initGravNode;
-    
+            meshObject.GetComponent<PickupV2Script>().setGravnode(this.gameObject);
             //Visual für initGravNode
             objectHeight = getHeight(meshObject);
+            tpToGravNode = true;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (tpToGravNode)
+        {
+            tpToGravNode = false;
             meshObject.transform.position = transform.position + objectHeight/2;
         }
-
-        
     }
 
     public static Vector3 getHeight (GameObject meshObject)
@@ -109,13 +119,6 @@ public class DublicateV2Script : MonoBehaviour
         if (isOccupied)
         {
             this.meshObject = meshObject;
-
-            //Visual für setOccupied
-            
-            meshObject.GetComponent<Rigidbody>().useGravity = false;
-            meshObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            //meshObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            meshObject.transform.position = transform.position + objectHeight / 3;
             Destroy(dublicate);
         }
         else {

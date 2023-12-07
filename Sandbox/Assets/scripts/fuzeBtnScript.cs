@@ -100,11 +100,8 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
                         Debug.LogWarning("Lights are not equal");
                         return false;
                     }
-                    else
-                    {
-                        Debug.Log("Lights are equal");
-                    }
                 }
+                Debug.Log("Lights are equal");
             }
             
         }

@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class PickupV2Script : MonoBehaviour , IInteractable
 {
     private bool pickedUp = false;
+    private bool rdyToGrab = false;
+    private bool rdyToPut = false;
+    private bool PutatRay = false;
+    private bool PutOnGravNode = false;
+
+    private bool rdyToPutOnGravNode = false;
+
+    private RaycastHit rayCastPutHit;
 
     private GameObject arm;
     private GameObject itemPos;
@@ -79,6 +85,12 @@ public class PickupV2Script : MonoBehaviour , IInteractable
                    
                     gravNode = radarObject.GetComponent<gravNodeV2Script>().getClosestGravNode();
                     gravNode.GetComponent<DublicateV2Script>().setOccupied(true, this.gameObject);
+
+                    rb.useGravity = false;
+                    rb.velocity = Vector3.zero;
+                    rdyToPut = true;
+                    PutOnGravNode = true;
+
                     radarObject.GetComponent<gravNodeV2Script>().destroyAllDublicates();
 
                 }
@@ -113,7 +125,7 @@ public class PickupV2Script : MonoBehaviour , IInteractable
                 if (hitsList.Count == 0)
                 {
                     Debug.Log("PutDown - Outof reach");
-                    transform.position = radarObject.transform.position;
+                   rdyToPut = true;
                 }
                 else
                 {
@@ -129,12 +141,13 @@ public class PickupV2Script : MonoBehaviour , IInteractable
                     if (closestHit.distance > handLaenge)
                     {
                         Debug.Log("PutDown - Outof reach but in range Of ray");
-                        transform.position = radarObject.transform.position;
+                        rdyToPut = true;
                     }
                     else
                     {
                         Debug.Log("PutDown - Closest Hit: " + closestHit.collider.gameObject.name);
-                        transform.position = closestHit.point + objectHeight / 3;
+                        PutatRay = true;
+                        rayCastPutHit = closestHit;
                     }
                 }
                 
@@ -155,7 +168,8 @@ public class PickupV2Script : MonoBehaviour , IInteractable
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
             Debug.Log("ITEMPOS: " + this.gameObject.transform.position);
-            this.gameObject.transform.position = itemPos.transform.position;
+            rdyToGrab = true;
+            
             Debug.Log("ITEMPOS: " + this.gameObject.transform.position);
             if (gravNode != null)
             {
@@ -173,10 +187,48 @@ public class PickupV2Script : MonoBehaviour , IInteractable
             Debug.Log("ITEMPOS: " + this.gameObject.transform.position);
         }
     }
+    void FixedUpdate()
+    {
+        if (rdyToGrab)
+        {
+            this.gameObject.transform.position = itemPos.transform.position;
+            rdyToGrab = false;
+        }
+        if (rdyToPut)
+        {
+            rdyToPut = false;
+            if (PutatRay)
+            {
+                Debug.Log("FIxedUpdate - PutAtRay");
+                this.gameObject.transform.position = rayCastPutHit.point + objectHeight/2;
+                PutatRay = false;
+            }
+            else if (PutOnGravNode)
+            {
+               this.gameObject.transform.position = gravNode.transform.position + objectHeight/2;
+                PutOnGravNode = false;
+            }
+            else
+            {
+                Debug.Log("FIxedUpdate - PutAtRadar");
+                this.gameObject.transform.position = radarObject.transform.position;
+            }
+        }
+        if (rdyToPutOnGravNode)
+        {
+            this.gameObject.transform.position = gravNode.transform.position + objectHeight/2;
+            rdyToPutOnGravNode = false;
+        }
+    }
+    public void setGravnode(GameObject gravNode)
+    {
+        this.gravNode = gravNode;
+    }
 
     public bool getPickedup()
     {
         return pickedUp ? true : false;
+        
     }
 }
 

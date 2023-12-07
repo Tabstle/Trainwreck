@@ -89,10 +89,6 @@ public class PlayerTeleport : MonoBehaviour
  
         yield return new WaitForSeconds(.1f);
         gameObject.transform.position = destination;
-        if (interact.IsPickedUp())
-        {
-            interact.getObject().transform.position = GameObject.Find("PickUpPoint").transform.position;
-        }
         yield return new WaitForSeconds(.1f);
 
        // Smoothly change the FOV and bloom back to normal after teleportation

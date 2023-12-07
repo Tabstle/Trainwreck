@@ -69,13 +69,13 @@ public class Interact : MonoBehaviour
                         pickedUp = !pickedUp;
                         interactObj.Interact();
                     }
-                    else if (HitInfo.collider.gameObject.CompareTag("movableV2"))
-                    {
-                        Debug.Log("Hit movable");
-                        hitObject = HitInfo.collider.gameObject;
-                        pickedUp = !pickedUp;
-                        interactObj.Interact();
-                    }
+                    //else if (HitInfo.collider.gameObject.CompareTag("movableV2"))
+                    //{
+                    //    Debug.Log("Hit movable");
+                    //    hitObject = HitInfo.collider.gameObject;
+                    //    pickedUp = !pickedUp;
+                    //    interactObj.Interact();
+                    //}
 
                     else if (HitInfo.collider.gameObject.CompareTag("lightBtn"))
                     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+
 using UnityEngine;
 
 public class MeshCombiner : MonoBehaviour
@@ -16,7 +17,7 @@ public class MeshCombiner : MonoBehaviour
 
         for (int i = 0; i < sourceMeshFilters.Count; i++)
         {
-            MeshUtility.Optimize(sourceMeshFilters[i].sharedMesh);
+            //MeshUtility.Optimize(sourceMeshFilters[i].sharedMesh);
             combine[i].mesh = sourceMeshFilters[i].sharedMesh;
             combine[i].transform = sourceMeshFilters[i].transform.localToWorldMatrix;
         }
@@ -25,7 +26,7 @@ public class MeshCombiner : MonoBehaviour
         Debug.Log("Target mesh: " + targetMeshFilter.name);
         var mesh = new Mesh();
         mesh.CombineMeshes(combine);
-        MeshUtility.Optimize(mesh);
+        //MeshUtility.Optimize(mesh);
 
         targetMeshFilter.mesh = mesh;
 
