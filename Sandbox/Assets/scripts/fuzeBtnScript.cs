@@ -123,8 +123,8 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
     private bool checkGravNodes()
     {
         //Check  GravNodes
-        int length = wagenDim1.transform.GetChild(0).transform.childCount;
-        int movables = (wagenDim1.transform.GetChild(4).transform.childCount + wagenDim2.transform.GetChild(4).transform.childCount);
+        int length = wagenDim1.transform.GetChild(1).transform.childCount;
+        int movables = (wagenDim1.transform.GetChild(2).transform.childCount + wagenDim2.transform.GetChild(2).transform.childCount);
         if (movables % 2 != 0)
         {
             Debug.LogError("Uneven amount of movables");
@@ -140,8 +140,8 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             GameObject GravNodeDim2;
             try
             {
-                GravNodeDim1 = wagenDim1.transform.GetChild(0).transform.GetChild(i).gameObject;
-                GravNodeDim2 = wagenDim2.transform.GetChild(0).transform.GetChild(i).gameObject;
+                GravNodeDim1 = wagenDim1.transform.GetChild(1).transform.GetChild(i).gameObject;
+                GravNodeDim2 = wagenDim2.transform.GetChild(1).transform.GetChild(i).gameObject;
             }
             catch (System.Exception)
             {
