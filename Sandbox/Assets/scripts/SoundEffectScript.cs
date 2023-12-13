@@ -21,11 +21,18 @@ public class SoundEffect : MonoBehaviour
     public float teleportVolume = 1.0f;
     public void PlayRewindSound()
     {
-        audioSource.PlayOneShot(teleport);
+        Debug.Log("Volume: " + teleportVolume) ;
+        tpSource.volume = teleportVolume;
+        tpSource.PlayOneShot(teleport);
     }
 
     //Field for Footsteps
     [Header("Footsteps")]
+
+    [Range(0.0f,1.0f)]
+    public float footstepVolume = 1.0f;
+
+
     public List<AudioClip> StepsL;
     public List<AudioClip> StepsR;
 
@@ -51,7 +58,9 @@ public class SoundEffect : MonoBehaviour
     public List<AudioClip> meatPlace;
 
     private AudioSource backgroundMusicSource;
-    private AudioSource audioSource;
+    private AudioSource stepSource;
+    private AudioSource tpSource;
+    //private AudioSource placingSounds;
 
     private bool isWalking;
     private bool isInDimension1 = true;
@@ -61,7 +70,8 @@ public class SoundEffect : MonoBehaviour
     void Start()
     {
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
-        audioSource = gameObject.AddComponent<AudioSource>();
+        stepSource = gameObject.AddComponent<AudioSource>();
+        tpSource = gameObject.AddComponent<AudioSource>();
 
         SwitchDimension(isInDimension1); // Start with the default dimension music
 
@@ -157,13 +167,13 @@ public class SoundEffect : MonoBehaviour
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) ||
                 Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
-                audioSource.clip = StepsL[Random.Range(0, StepsL.Count)];
-                audioSource.Play();
+                stepSource.clip = StepsL[Random.Range(0, StepsL.Count)];
+                stepSource.Play();
 
                 yield return new WaitForSeconds(0.5f);
 
-                audioSource.clip = StepsR[Random.Range(0, StepsR.Count)];
-                audioSource.Play();
+                stepSource.clip = StepsR[Random.Range(0, StepsR.Count)];
+                stepSource.Play();
 
                 yield return new WaitForSeconds(0.5f);
             }

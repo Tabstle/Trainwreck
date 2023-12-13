@@ -158,6 +158,15 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
                 if (gravNodeObj1.GetComponent<PickupV2Script>().ObjectTag == gravNodeObj2.GetComponent<PickupV2Script>().ObjectTag)
                 {
                     objectCounter = objectCounter + 2;
+                    
+                   if(gravNodeObj1.GetComponent<PickupV2Script>().transform.rotation == gravNodeObj2.GetComponent<PickupV2Script>().transform.rotation)
+                    {
+                        Debug.LogWarning("Rotation is correct");
+                    }
+                    else
+                    {
+                        wrongObjectCounter++;
+                    }
                 }
             }
             else if (gravNodeObj1 == null && gravNodeObj2 == null)
