@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class DublicateV2Script : MonoBehaviour
 {
@@ -9,12 +10,15 @@ public class DublicateV2Script : MonoBehaviour
     [SerializeField] private GameObject initGravNode; // if u wanna have an object directli on an gravNode u  have to reference it here;
 
     private bool tpToGravNode = false;
+    private bool duplicateToNode = false;
 
     private bool isOccupied = false;
     private GameObject meshObject = null;
     private GameObject dublicate = null;
     private Vector3 objectHeight;
     [SerializeField] private Material material;
+
+    private Vector3 thePlaceToBe;
 
     public void Start()
     {
@@ -37,7 +41,14 @@ public class DublicateV2Script : MonoBehaviour
         if (tpToGravNode)
         {
             tpToGravNode = false;
-            meshObject.transform.position = transform.position + objectHeight/2;
+            meshObject.transform.position = transform.position + objectHeight/3;
+        }
+        if (duplicateToNode)
+        {
+            duplicateToNode = false;
+            dublicate.transform.localScale = meshObject.transform.localScale;
+            dublicate.transform.position = transform.position + objectHeight / 3;
+            thePlaceToBe = transform.position + objectHeight / 3;
         }
     }
 
@@ -49,7 +60,7 @@ public class DublicateV2Script : MonoBehaviour
             if (meshFilter != null && meshFilter.mesh != null)
             {
                 Vector3[] vertices = meshFilter.mesh.vertices;
-                float highestY = 0;
+                float highestY = float.MinValue;
                 float lowestY = float.MaxValue;
 
                 foreach (Vector3 vertex in vertices)
@@ -63,7 +74,7 @@ public class DublicateV2Script : MonoBehaviour
                         lowestY = vertex.y;
                     }
                 }
-                return new Vector3(0, (highestY - lowestY) * 0.5f, 0);
+                return new Vector3(0, (highestY - lowestY), 0);
             }
         }
         catch (System.Exception e)
@@ -90,9 +101,8 @@ public class DublicateV2Script : MonoBehaviour
             //Debug.Log("Init clip");
             dublicate = new GameObject("Silhouette of: " + meshObject.name);
             // Setts Scale and Postion of the dublicate
-            dublicate.transform.localScale = meshObject.transform.localScale;
-            dublicate.transform.position = transform.position + objectHeight/3;
 
+            duplicateToNode = true;
 
             MeshFilter newMeshFilter = dublicate.AddComponent<MeshFilter>();
             newMeshFilter.sharedMesh = meshFilter.sharedMesh;
@@ -152,6 +162,8 @@ public class DublicateV2Script : MonoBehaviour
         meshObject = null;
         Destroy(dublicate);
     }
+   
+  
 
 
     public bool checkEquals(Object o)

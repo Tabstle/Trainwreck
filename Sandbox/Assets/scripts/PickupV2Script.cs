@@ -63,7 +63,8 @@ public class PickupV2Script : MonoBehaviour , IInteractable
         itemPos = GameObject.Find("ItemPos");
         cam = GameObject.Find("Main Camera");
         rb = GetComponent<Rigidbody>();
-        objectHeight = new Vector3(0, transform.lossyScale.y * 0.5f, 0);
+        
+        objectHeight = DublicateV2Script.getHeight(this.gameObject);
         radarObject = GameObject.Find("PickUpPoint").transform.GetChild(0).gameObject;
 
 
