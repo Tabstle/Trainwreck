@@ -97,6 +97,16 @@ public class PickupV2Script : MonoBehaviour , IInteractable
                 else
                 {
                     Debug.LogError("Colliders not valid");
+
+                    gravNode = radarObject.GetComponent<gravNodeV2Script>().getClosestGravNode();
+                    gravNode.GetComponent<DublicateV2Script>().setOccupied(true, this.gameObject);
+
+                    rb.useGravity = false;
+                    rb.velocity = Vector3.zero;
+                    rdyToPut = true;
+                    PutOnGravNode = true;
+
+                    radarObject.GetComponent<gravNodeV2Script>().destroyAllDublicates();
                     //Shake Object
                 }   
             }

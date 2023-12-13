@@ -149,6 +149,47 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
                 return false;
             }
 
+            GameObject gravNodeObj1 = GravNodeDim1.GetComponent<DublicateV2Script>().getMovableObj();
+            GameObject gravNodeObj2 = GravNodeDim2.GetComponent<DublicateV2Script>().getMovableObj();
+
+
+            if(gravNodeObj1 != null && gravNodeObj2 != null)
+            {
+                if (gravNodeObj1.GetComponent<PickupV2Script>().ObjectTag == gravNodeObj2.GetComponent<PickupV2Script>().ObjectTag)
+                {
+                    objectCounter = objectCounter + 2;
+                }
+            }
+            else if (gravNodeObj1 == null && gravNodeObj2 == null)
+            {
+                if (nodeCanbeEmpty)
+                {
+                    continue;
+                }
+            }
+            else if(gravNodeObj1 == null && gravNodeObj2 != null)
+            {
+                wrongObjectCounter++;
+            }
+            else if(gravNodeObj1 != null && gravNodeObj2 == null)
+            {
+                wrongObjectCounter++;
+            }
+            else
+            {
+                Debug.LogWarning("GravNode not found");
+                return false;
+            }
+
+
+
+
+
+
+
+
+
+
             //// Check if Object on GravNode is equal to the object at the other Position
             //if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() == null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() == null)
             //{
@@ -178,8 +219,8 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             //        wrongObjectCounter++;
             //    }
             //}
-            
-        
+
+
         }
         if (objectCounter == movables && acceptable)
         {
