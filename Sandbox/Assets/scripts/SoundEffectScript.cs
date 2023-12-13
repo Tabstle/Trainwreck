@@ -9,18 +9,19 @@ public class SoundEffect : MonoBehaviour
     public AudioClip dimension1Music;
     public AudioClip dimension2Music;
 
-    [Header("Music Volume")]
     [Range(0.0f, 1.0f)]
     public float dimension1Volume = 1.0f;
     [Range(0.0f, 1.0f)]
     public float dimension2Volume = 1.0f;
 
     //Field for TP Sound Effect
-    [Header("Rewind")]
-    public AudioClip rewindSound;
+    [Header("Teleport")]
+    public AudioClip teleport;
+    [Range(0.0f, 1.0f)]
+    public float teleportVolume = 1.0f;
     public void PlayRewindSound()
     {
-        audioSource.PlayOneShot(rewindSound);
+        audioSource.PlayOneShot(teleport);
     }
 
     //Field for Footsteps
