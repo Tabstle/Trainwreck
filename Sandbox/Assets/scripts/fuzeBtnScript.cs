@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -238,6 +239,30 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
         else
         {
             Debug.LogWarning("Not all movables are on a gravNode. \n" + movables + ":totalmovables;  " + objectCounter + ":correct placed; " + wrongObjectCounter + ":wrong placed; " + (movables - objectCounter - wrongObjectCounter) + ":not placed");
+
+            GameObject ItemsDim1 = wagenDim1.transform.GetChild(2).transform.gameObject;
+            GameObject ItemsDim2 = wagenDim2.transform.GetChild(2).transform.gameObject;
+
+            int obectsDim1 = ItemsDim1.transform.childCount;
+            int obectsDim2 = ItemsDim2.transform.childCount;
+                
+            for (int i = 0; i < obectsDim1; i++)
+            {
+                GameObject obj = ItemsDim1.transform.GetChild(i).gameObject;
+                if(obj.GetComponent<PickupV2Script>().hasGravNode() == false)
+                {
+                    Debug.LogWarning("Object " + obj.name + " has no gravNode");
+                }
+            }
+            for (int i = 0; i < obectsDim2; i++)
+            {
+                GameObject obj = ItemsDim2.transform.GetChild(i).gameObject;
+                if (obj.GetComponent<PickupV2Script>().hasGravNode() == false)
+                {
+                    Debug.LogWarning("Object " + obj.name + " has no gravNode");
+                }
+            }
+
             return false;
         }
        

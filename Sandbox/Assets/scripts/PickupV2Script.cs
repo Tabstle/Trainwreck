@@ -241,6 +241,15 @@ public class PickupV2Script : MonoBehaviour , IInteractable
         return pickedUp ? true : false;
         
     }
+
+    public bool hasGravNode()
+    {
+        if (gravNode != null)
+        {
+            return true;
+        }
+        return false;
+    }
 }
 
 

@@ -29,6 +29,7 @@ public class DublicateV2Script : MonoBehaviour
             Debug.LogWarning("Init GravNode");
             //Logik für initGravNode
             meshObject = initGravNode;
+            meshObject.GetComponent<Rigidbody>().useGravity = false;
             meshObject.GetComponent<PickupV2Script>().setGravnode(this.gameObject);
             //Visual für initGravNode
             objectHeight = getHeight(meshObject);
@@ -46,9 +47,13 @@ public class DublicateV2Script : MonoBehaviour
         if (duplicateToNode)
         {
             duplicateToNode = false;
-            dublicate.transform.localScale = meshObject.transform.localScale;
-            dublicate.transform.position = transform.position + objectHeight / 3;
-            thePlaceToBe = transform.position + objectHeight / 3;
+            if (dublicate != null)
+            {
+                dublicate.transform.localScale = meshObject.transform.localScale;
+                dublicate.transform.position = transform.position + objectHeight / 3;
+                thePlaceToBe = transform.position + objectHeight / 3;
+            }
+            
         }
     }
 
@@ -93,12 +98,24 @@ public class DublicateV2Script : MonoBehaviour
         this.meshObject = meshObject;
         objectHeight = getHeight(meshObject);
 
+        MeshFilter meshFilter;
+        MeshRenderer meshRenderer;
+        if (meshObject.GetComponent<PickupV2Script>().ObjectTag == PickupV2Script.Tag.CandleholderSmall || meshObject.GetComponent<PickupV2Script>().ObjectTag == PickupV2Script.Tag.CandleholderMedium || meshObject.GetComponent<PickupV2Script>().ObjectTag == PickupV2Script.Tag.CandleholderLarge)
+        {
+            Debug.LogWarning("Shits its a Candleholder");
+            meshFilter = meshObject.transform.GetChild(0).GetComponent<MeshFilter>();
+            meshRenderer = meshObject.transform.GetChild(0).GetComponent<MeshRenderer>();
+        }
+        else
+        {
+            meshFilter = meshObject.GetComponent<MeshFilter>();
+            meshRenderer = meshObject.GetComponent<MeshRenderer>();
+        }
 
-        MeshFilter meshFilter = meshObject.GetComponent<MeshFilter>();
-        MeshRenderer meshRenderer = meshObject.GetComponent<MeshRenderer>();
+        
         if (meshFilter != null && meshRenderer != null)
         {
-            //Debug.Log("Init clip");
+            Debug.Log("Init clip");
             dublicate = new GameObject("Silhouette of: " + meshObject.name);
             // Setts Scale and Postion of the dublicate
 
