@@ -26,14 +26,7 @@ public class DublicateV2Script : MonoBehaviour
 
         if (initGravNode != null)
         {
-            Debug.LogWarning("Init GravNode");
-            //Logik für initGravNode
-            meshObject = initGravNode;
-            meshObject.GetComponent<Rigidbody>().useGravity = false;
-            meshObject.GetComponent<PickupV2Script>().setGravnode(this.gameObject);
-            //Visual für initGravNode
-            objectHeight = getHeight(meshObject);
-            tpToGravNode = true;
+            initMovable(initGravNode);
         }
     }
 
@@ -42,7 +35,7 @@ public class DublicateV2Script : MonoBehaviour
         if (tpToGravNode)
         {
             tpToGravNode = false;
-            meshObject.transform.position = transform.position + objectHeight/3;
+            meshObject.transform.position = transform.position + objectHeight/2;
         }
         if (duplicateToNode)
         {
@@ -50,8 +43,8 @@ public class DublicateV2Script : MonoBehaviour
             if (dublicate != null)
             {
                 dublicate.transform.localScale = meshObject.transform.localScale;
-                dublicate.transform.position = transform.position + objectHeight / 3;
-                thePlaceToBe = transform.position + objectHeight / 3;
+                dublicate.transform.position = transform.position + objectHeight / 2;
+                thePlaceToBe = transform.position + objectHeight / 2;
             }
             
         }
@@ -100,17 +93,10 @@ public class DublicateV2Script : MonoBehaviour
 
         MeshFilter meshFilter;
         MeshRenderer meshRenderer;
-        if (meshObject.GetComponent<PickupV2Script>().ObjectTag == PickupV2Script.Tag.CandleholderSmall || meshObject.GetComponent<PickupV2Script>().ObjectTag == PickupV2Script.Tag.CandleholderMedium || meshObject.GetComponent<PickupV2Script>().ObjectTag == PickupV2Script.Tag.CandleholderLarge)
-        {
-            Debug.LogWarning("Shits its a Candleholder");
-            meshFilter = meshObject.transform.GetChild(0).GetComponent<MeshFilter>();
-            meshRenderer = meshObject.transform.GetChild(0).GetComponent<MeshRenderer>();
-        }
-        else
-        {
-            meshFilter = meshObject.GetComponent<MeshFilter>();
-            meshRenderer = meshObject.GetComponent<MeshRenderer>();
-        }
+        
+        meshFilter = meshObject.GetComponent<MeshFilter>();
+        meshRenderer = meshObject.GetComponent<MeshRenderer>();
+        
 
         
         if (meshFilter != null && meshRenderer != null)
@@ -180,6 +166,19 @@ public class DublicateV2Script : MonoBehaviour
         Destroy(dublicate);
     }
    
+    public void initMovable(GameObject initObject)
+    {
+        
+        Debug.LogWarning("Init GravNode");
+        //Logik für initObject
+        meshObject = initObject;
+        meshObject.GetComponent<Rigidbody>().useGravity = false;
+        meshObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        meshObject.GetComponent<PickupV2Script>().setGravnode(this.gameObject);
+        //Visual für initObject
+        objectHeight = getHeight(meshObject);
+        tpToGravNode = true;
+    }
   
 
 
