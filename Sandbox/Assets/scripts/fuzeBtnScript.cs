@@ -104,6 +104,7 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
                     if (!(lightRiddleControllerObjDim1.transform.GetChild(0).transform.GetChild(i).gameObject.activeSelf == lightRiddleControllerObjDim2.transform.GetChild(0).transform.GetChild(i).gameObject.activeSelf))
                     {
                         Debug.LogWarning("Lights are not equal");
+                        gameOverScript.Setup(0, 3, PlayerTeleport.getDimension());
                         return false;
                     }
                 }
@@ -153,7 +154,7 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             catch (System.Exception)
             {
                 Debug.LogWarning("GravNode not found");
-                gameOverScript.Setup(0, 3, PlayerTeleport.getDimension());
+                
                 return false;
             }
 
