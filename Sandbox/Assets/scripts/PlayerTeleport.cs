@@ -74,7 +74,7 @@ public class PlayerTeleport : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T) && controller.disabled == false)
+        if (Input.GetButtonDown("Jump") && controller.disabled == false)
         {
             
             GetComponent<SoundEffect>().PlayRewindSound();
@@ -172,6 +172,12 @@ public class PlayerTeleport : MonoBehaviour
  
 
         controller.disabled = false;
+
         
+        
+    }
+    public static bool getDimension() {
+        Trains currentTrain = FindObjectOfType<PlayerTeleport>().currentTrain;
+        return currentTrain == Trains.Train1;
     }
 }

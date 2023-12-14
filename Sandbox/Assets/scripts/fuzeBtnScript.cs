@@ -33,6 +33,10 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
     //switches
     [SerializeField] private bool nodeCanbeEmpty = true;
 
+
+    //Gameover Script
+    public gameOverScript gameOverScript;
+
     public void Interact()
     {
         Debug.Log("FuzeButton pressed");
@@ -83,6 +87,7 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
 
     private bool checkFuse()
     {
+        Debug.Log("Checking Fuse");
         bool fuseCorrect = false;
         //Check for LightRiddle
         if (lightRiddleControllerObjDim1 != null && lightRiddleControllerObjDim2 != null)
@@ -99,6 +104,7 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
                     if (!(lightRiddleControllerObjDim1.transform.GetChild(0).transform.GetChild(i).gameObject.activeSelf == lightRiddleControllerObjDim2.transform.GetChild(0).transform.GetChild(i).gameObject.activeSelf))
                     {
                         Debug.LogWarning("Lights are not equal");
+                        gameOverScript.Setup(0, 3, PlayerTeleport.getDimension());
                         return false;
                     }
                 }
@@ -124,6 +130,7 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
     private bool checkGravNodes()
     {
         //Check  GravNodes
+        Debug.Log("Check GravNodes");
         int length = wagenDim1.transform.GetChild(1).transform.childCount;
         int movables = (wagenDim1.transform.GetChild(2).transform.childCount + wagenDim2.transform.GetChild(2).transform.childCount);
         if (movables % 2 != 0)
@@ -147,6 +154,7 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             catch (System.Exception)
             {
                 Debug.LogWarning("GravNode not found");
+                
                 return false;
             }
 
@@ -192,53 +200,19 @@ public class fuzeBtnScript : MonoBehaviour, IInteractable
             }
 
 
-
-
-
-
-
-
-
-
-            //// Check if Object on GravNode is equal to the object at the other Position
-            //if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() == null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() == null)
-            //{
-            //    acceptable = nodeCanbeEmpty;
-            //    continue;
-            //}
-            //else if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() == null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() != null)
-            //{
-            //    wrongObjectCounter++;
-            //    continue;
-            //}
-            //else if (GravNodeDim1.GetComponent<gravNodeDubScript>().getMovableObj() != null && GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj() == null)
-            //{
-            //    wrongObjectCounter++;
-            //    continue;
-            //}// Equals cant work like this have to change it
-            //else
-            //{
-            //    if (GravNodeDim1.GetComponent<gravNodeDubScript>().checkEquals(GravNodeDim2.GetComponent<gravNodeDubScript>().getMovableObj()))
-            //    {
-            //        objectCounter++;
-            //        objectCounter++;
-            //    }
-            //    else
-            //    {
-            //        wrongObjectCounter++;
-            //        wrongObjectCounter++;
-            //    }
-            //}
-
-
         }
         if (objectCounter == movables && acceptable)
         {
+            gameOverScript.Setup(0, 1, PlayerTeleport.getDimension());
             return true;
         }
         else
         {
             Debug.LogWarning("Not all movables are on a gravNode. \n" + movables + ":totalmovables;  " + objectCounter + ":correct placed; " + wrongObjectCounter + ":wrong placed; " + (movables - objectCounter - wrongObjectCounter) + ":not placed");
+
+            //UI
+            gameOverScript.Setup(movables - objectCounter, 2, PlayerTeleport.getDimension());
+
 
             GameObject ItemsDim1 = wagenDim1.transform.GetChild(2).transform.gameObject;
             GameObject ItemsDim2 = wagenDim2.transform.GetChild(2).transform.gameObject;
