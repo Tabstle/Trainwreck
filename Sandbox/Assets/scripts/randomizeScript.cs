@@ -30,7 +30,7 @@ public class randomizeScript : MonoBehaviour
     public void randomize()
     {
 
-        float randomizePercentage = 0.8f;
+        float randomizePercentage = 0.9f;
 
         Debug.Log("Randomize Objcts");
         int nodesTrain1Count = trainOne.transform.GetChild(1).childCount;
@@ -258,6 +258,12 @@ public class randomizeScript : MonoBehaviour
 
         // Place the percentage of objects
 
+
+        List<GameObject> moveableTableBufferTrain1 = new List<GameObject>();
+        moveableTableBufferTrain1.AddRange(moveableTableTrain1);
+        List<GameObject> moveableTableBufferTrain2 = new List<GameObject>();
+        moveableTableBufferTrain2.AddRange(moveableTableTrain2);
+
         for (int i = 0; i < (int)(moveableTableTrain1.Count * randomizePercentage); i++)
         {
             GameObject indexMovableTrain1 = moveableTableTrain1[i];
@@ -272,12 +278,21 @@ public class randomizeScript : MonoBehaviour
             randomNodeTrain1.GetComponent<DublicateV2Script>().initMovable(indexMovableTrain1);
             randomNodeTrain2.GetComponent<DublicateV2Script>().initMovable(indexMovableTrain2);
 
-            moveableTableTrain1.Remove(indexMovableTrain1);
-            moveableTableTrain2.Remove(indexMovableTrain2);
+            moveableTableBufferTrain1.Remove(indexMovableTrain1);
+            moveableTableBufferTrain2.Remove(indexMovableTrain2);
 
             tableNodesTrain1.Remove(randomNodeTrain1);
             tableNodesTrain2.Remove(randomNodeTrain2);
         }
+
+        moveableTableTrain1 = moveableTableBufferTrain1;
+        moveableTableTrain2 = moveableTableBufferTrain2;
+
+
+        List<GameObject> moveableFloorBufferTrain1 = new List<GameObject>();
+        moveableFloorBufferTrain1.AddRange(moveableFloorTrain1);
+        List<GameObject> moveableFloorBufferTrain2 = new List<GameObject>();
+        moveableFloorBufferTrain2.AddRange(moveableFloorTrain2);
 
         for (int i = 0; i < (int)(moveableFloorTrain1.Count * randomizePercentage); i++)
         {
@@ -293,12 +308,20 @@ public class randomizeScript : MonoBehaviour
             randomNodeTrain1.GetComponent<DublicateV2Script>().initMovable(indexMovableTrain1);
             randomNodeTrain2.GetComponent<DublicateV2Script>().initMovable(indexMovableTrain2);
 
-            moveableFloorTrain1.Remove(indexMovableTrain1);
-            moveableFloorTrain2.Remove(indexMovableTrain2);
+            moveableFloorBufferTrain1.Remove(indexMovableTrain1);
+            moveableFloorBufferTrain2.Remove(indexMovableTrain2);
 
             floorNodesTrain1.Remove(randomNodeTrain1);
-            floorNodesTrain2.Remove(randomNodeTrain2);
+            floorNodesTrain1.Remove(randomNodeTrain2);
         }
+
+        moveableFloorTrain1 = moveableFloorBufferTrain1;
+        moveableFloorTrain2 = moveableFloorBufferTrain2;
+
+        List<GameObject> moveableWallBufferTrain1 = new List<GameObject>();
+        moveableWallBufferTrain1.AddRange(moveableWallTrain1);
+        List<GameObject> moveableWallBufferTrain2 = new List<GameObject>();
+        moveableWallBufferTrain2.AddRange(moveableWallTrain2);
         
         for (int i = 0; i < (int)(moveableWallTrain1.Count * randomizePercentage); i++)
         {
@@ -314,12 +337,15 @@ public class randomizeScript : MonoBehaviour
             randomNodeTrain1.GetComponent<DublicateV2Script>().initMovable(indexMovableTrain1);
             randomNodeTrain2.GetComponent<DublicateV2Script>().initMovable(indexMovableTrain2);
 
-            moveableWallTrain1.Remove(indexMovableTrain1);
-            moveableWallTrain2.Remove(indexMovableTrain2);
+            moveableWallBufferTrain1.Remove(indexMovableTrain1);
+            moveableWallBufferTrain2.Remove(indexMovableTrain2);
 
             wallNodesTrain1.Remove(randomNodeTrain1);
             wallNodesTrain2.Remove(randomNodeTrain2);
         }   
+
+        moveableWallTrain1 = moveableWallBufferTrain1;
+        moveableWallTrain2 = moveableWallBufferTrain2;
 
 
 
