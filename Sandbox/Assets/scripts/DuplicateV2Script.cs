@@ -171,7 +171,7 @@ public class DublicateV2Script : MonoBehaviour
         
         Debug.LogWarning("Init GravNode");
         //Logik für initObject
-        meshObject = initObject;
+        setOccupied(true, initObject);
         meshObject.GetComponent<Rigidbody>().useGravity = false;
         meshObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         meshObject.GetComponent<PickupV2Script>().setGravnode(this.gameObject);
