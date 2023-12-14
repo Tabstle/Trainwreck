@@ -11,6 +11,7 @@ public class PlayerTeleport : MonoBehaviour
 
     private GameObject pickedItem;
     private IInteractable interactableObj;
+    private Vector3 startPosition;
 
 
     PlayerController controller;
@@ -49,6 +50,7 @@ public class PlayerTeleport : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startPosition = gameObject.transform.position;
         controller = gameObject.GetComponent<PlayerController>();
         interact = gameObject.GetComponent<Interact>();
 
@@ -94,6 +96,19 @@ public class PlayerTeleport : MonoBehaviour
             }
             StartCoroutine(Teleport(destination));
         }
+
+        if (Input.GetKeyDown(KeyCode.O) && controller.disabled == false)
+        {
+            GetComponent<SoundEffect>().PlayRewindSound();
+            
+            StartCoroutine(resetPosition());
+        }
+    }
+    IEnumerator resetPosition()
+    {
+        yield return new WaitForSeconds(.1f);
+        gameObject.transform.position = startPosition;
+        yield return new WaitForSeconds(.1f);
     }
     IEnumerator Teleport(Vector3 destination)
     {

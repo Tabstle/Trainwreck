@@ -156,15 +156,8 @@ public class gravNodeV2Script : MonoBehaviour
             if (!node.gameObject.Equals(raycastPos) && node.gameObject.GetComponent<DublicateV2Script>().getOccupied())
             {
                 Vector3 direction = node.transform.position - raycastPos.transform.position;
-                Renderer renderer;
-                if (movableObj.GetComponent<PickupV2Script>().ObjectTag == PickupV2Script.Tag.CandleholderSmall || movableObj.GetComponent<PickupV2Script>().ObjectTag == PickupV2Script.Tag.CandleholderMedium || movableObj.GetComponent<PickupV2Script>().ObjectTag == PickupV2Script.Tag.CandleholderLarge)
-                {
-                    renderer = movableObj.transform.GetChild(0).GetComponent<Renderer>();
-                }
-                else
-                {
-                    renderer = movableObj.GetComponent<Renderer>();
-                }
+                Renderer renderer;  
+                renderer = movableObj.GetComponent<Renderer>();
                 Bounds bounds = renderer.bounds;
                 float distance = bounds.extents.magnitude;
                 if (Physics.Raycast(raycastPos.transform.position, direction, distance, LayerMask.GetMask("Interactable")))
