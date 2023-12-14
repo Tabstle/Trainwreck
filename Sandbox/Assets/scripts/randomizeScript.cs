@@ -13,6 +13,8 @@ public class randomizeScript : MonoBehaviour
         trainOne = GameObject.Find("Train1");
         trainTwo = GameObject.Find("Train2");
 
+        randomize();
+
     }
 
     // Update is called once per frame

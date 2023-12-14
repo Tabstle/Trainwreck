@@ -172,6 +172,12 @@ public class PlayerTeleport : MonoBehaviour
  
 
         controller.disabled = false;
+
         
+        
+    }
+    public static bool getDimension() {
+        Trains currentTrain = FindObjectOfType<PlayerTeleport>().currentTrain;
+        return currentTrain == Trains.Train1;
     }
 }
