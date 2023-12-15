@@ -84,7 +84,7 @@ public class SoundEffect : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             isInDimension1 = !isInDimension1;
             SwitchDimension(isInDimension1);
